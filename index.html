@@ -7,170 +7,91 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0e0e10;
-  --surface: #16161a;
-  --surface2: #1e1e24;
-  --border: #2a2a35;
-  --accent: #c8a96e;
-  --accent2: #7c6aff;
-  --green: #6eb8a9;
-  --text: #e8e6e1;
-  --muted: #888892;
-  --red: #e07070;
-  --sidebar-w: 260px;
+  --bg: #0e0e10; --surface: #16161a; --surface2: #1e1e24;
+  --border: #2a2a35; --accent: #c8a96e; --accent2: #7c6aff;
+  --green: #6eb8a9; --text: #e8e6e1; --muted: #888892;
+  --red: #e07070; --sidebar-w: 260px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 100vh;
-}
+body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; line-height:1.6; min-height:100vh; }
 
-/* ── TOPBAR ── */
-#topbar {
-  position: fixed; top:0; left:0; right:0; height:56px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center;
-  padding: 0 24px; gap: 14px; z-index: 200;
-}
-.logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px; color: var(--accent); font-weight: 700;
-  white-space: nowrap;
-}
+/* TOPBAR */
+#topbar { position:fixed; top:0; left:0; right:0; height:56px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 24px; gap:14px; z-index:200; }
+.logo { font-family:'Playfair Display',serif; font-size:18px; color:var(--accent); font-weight:700; white-space:nowrap; }
 .topbar-div { width:1px; height:20px; background:var(--border); flex-shrink:0; }
-#search-box {
-  flex:1; max-width:300px;
-  padding: 7px 14px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 8px; color: var(--text);
-  font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none;
-  transition: border-color 0.2s;
-}
-#search-box:focus { border-color: var(--accent); }
-#search-box::placeholder { color: var(--muted); }
-.topbar-right { margin-left:auto; display:flex; gap:8px; }
+#search-box { flex:1; max-width:280px; padding:7px 14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:13px; outline:none; transition:border-color 0.2s; }
+#search-box:focus { border-color:var(--accent); }
+#search-box::placeholder { color:var(--muted); }
+.topbar-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
 
-/* ── BUTTONS ── */
-.btn {
-  padding: 7px 14px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--surface2);
-  color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 13px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
-}
-.btn:hover { border-color: var(--accent); color: var(--accent); }
-.btn.primary { background: var(--accent); color: #0e0e10; border-color: var(--accent); font-weight:500; }
-.btn.primary:hover { opacity: 0.85; color: #0e0e10; }
-.btn.danger { color: var(--red); border-color: rgba(224,112,112,0.3); }
-.btn.danger:hover { border-color: var(--red); background: rgba(224,112,112,0.08); color: var(--red); }
+/* SYNC STATUS */
+#sync-status { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:5px; white-space:nowrap; }
+#sync-dot { width:7px; height:7px; border-radius:50%; background:var(--muted); flex-shrink:0; }
+#sync-dot.ok { background:var(--green); }
+#sync-dot.err { background:var(--red); }
+#sync-dot.loading { background:var(--accent); animation:pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* BUTTONS */
+.btn { padding:7px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surface2); color:var(--text); font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.btn:hover { border-color:var(--accent); color:var(--accent); }
+.btn.primary { background:var(--accent); color:#0e0e10; border-color:var(--accent); font-weight:500; }
+.btn.primary:hover { opacity:0.85; color:#0e0e10; }
+.btn.danger { color:var(--red); border-color:rgba(224,112,112,0.3); }
+.btn.danger:hover { border-color:var(--red); background:rgba(224,112,112,0.08); color:var(--red); }
 .btn.sm { font-size:12px; padding:4px 10px; }
 
-/* ── LAYOUT ── */
+/* LAYOUT */
 #layout { display:flex; margin-top:56px; min-height:calc(100vh - 56px); }
 
-/* ── SIDEBAR ── */
-#sidebar {
-  width: var(--sidebar-w); background: var(--surface);
-  border-right: 1px solid var(--border);
-  position: fixed; top:56px; left:0; bottom:0;
-  overflow-y: auto; padding: 16px 0 32px; z-index:100;
-}
+/* SIDEBAR */
+#sidebar { width:var(--sidebar-w); background:var(--surface); border-right:1px solid var(--border); position:fixed; top:56px; left:0; bottom:0; overflow-y:auto; padding:16px 0 32px; z-index:100; }
 #sidebar::-webkit-scrollbar { width:3px; }
-#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius:4px; }
-.sb-label {
-  padding: 12px 18px 6px; font-size:10px;
-  text-transform: uppercase; letter-spacing:0.1em;
-  color: var(--muted); opacity:0.6;
-}
-.sb-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 9px 18px; font-size:13px; color: var(--muted);
-  cursor: pointer; transition: all 0.15s;
-  border-left: 2px solid transparent; user-select: none;
-}
-.sb-item:hover { color: var(--text); background: var(--surface2); }
-.sb-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(200,169,110,0.06); }
-.sb-badge {
-  margin-left: auto; font-size:10px;
-  background: var(--surface2); border: 1px solid var(--border);
-  padding: 1px 6px; border-radius: 99px; color: var(--muted);
-}
-.sb-item.active .sb-badge { border-color: rgba(200,169,110,0.3); color: var(--accent); background: rgba(200,169,110,0.08); }
+#sidebar::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+.sb-label { padding:12px 18px 6px; font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); opacity:0.6; }
+.sb-item { display:flex; align-items:center; gap:8px; padding:9px 18px; font-size:13px; color:var(--muted); cursor:pointer; transition:all 0.15s; border-left:2px solid transparent; user-select:none; }
+.sb-item:hover { color:var(--text); background:var(--surface2); }
+.sb-item.active { color:var(--accent); border-left-color:var(--accent); background:rgba(200,169,110,0.06); }
+.sb-badge { margin-left:auto; font-size:10px; background:var(--surface2); border:1px solid var(--border); padding:1px 6px; border-radius:99px; color:var(--muted); }
+.sb-item.active .sb-badge { border-color:rgba(200,169,110,0.3); color:var(--accent); background:rgba(200,169,110,0.08); }
 
-/* ── MAIN ── */
-#main { margin-left: var(--sidebar-w); flex:1; padding: 28px 40px 60px; }
+/* MAIN */
+#main { margin-left:var(--sidebar-w); flex:1; padding:28px 40px 60px; }
 
-/* ── STATS ── */
+/* STATS */
 #stats { display:flex; gap:14px; margin-bottom:24px; }
-.stat { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 18px; flex:1; }
+.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 18px; flex:1; }
 .stat .num { font-family:'Playfair Display',serif; font-size:24px; color:var(--accent); line-height:1.1; }
 .stat .lbl { font-size:11px; color:var(--muted); margin-top:2px; }
 
-/* ── TABS ── */
+/* TABS */
 #tab-bar { display:flex; gap:6px; margin-bottom:22px; flex-wrap:wrap; }
-.tab {
-  display: flex; align-items: center; gap:6px;
-  padding: 8px 16px; border-radius: 8px;
-  border: 1px solid var(--border); background: var(--surface);
-  color: var(--muted); font-family: 'DM Sans', sans-serif;
-  font-size: 13px; cursor: pointer; transition: all 0.15s; white-space:nowrap;
-}
-.tab:hover { color: var(--text); border-color: #3a3a48; background: var(--surface2); }
-.tab.active { background: var(--accent); color: #0e0e10; border-color: var(--accent); font-weight:500; }
+.tab { display:flex; align-items:center; gap:6px; padding:8px 16px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+.tab:hover { color:var(--text); border-color:#3a3a48; background:var(--surface2); }
+.tab.active { background:var(--accent); color:#0e0e10; border-color:var(--accent); font-weight:500; }
 .tab .tc { font-size:11px; background:rgba(0,0,0,0.15); padding:1px 6px; border-radius:99px; }
 
-/* ── MASTER BLOCK ── */
-.master-block {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 14px; margin-bottom: 14px; overflow: hidden;
-}
-.master-header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 16px 20px; cursor: pointer; user-select: none;
-  transition: background 0.15s;
-}
-.master-header:hover { background: rgba(255,255,255,0.025); }
-.master-chevron {
-  color: var(--accent); font-size:11px;
-  transition: transform 0.25s; flex-shrink:0;
-}
-.master-block.open .master-chevron { transform: rotate(90deg); }
+/* MASTER BLOCK */
+.master-block { background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-bottom:14px; overflow:hidden; }
+.master-header { display:flex; align-items:center; gap:12px; padding:16px 20px; cursor:pointer; user-select:none; transition:background 0.15s; }
+.master-header:hover { background:rgba(255,255,255,0.025); }
+.master-chevron { color:var(--accent); font-size:11px; transition:transform 0.25s; flex-shrink:0; }
+.master-block.open .master-chevron { transform:rotate(90deg); }
 .master-icon { font-size:20px; }
-.master-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 19px; font-weight:700; color: var(--text); flex:1;
-}
+.master-title { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:var(--text); flex:1; }
 .master-desc { font-size:12px; color:var(--muted); margin-top:2px; }
-.master-count {
-  font-size:11px; color:var(--muted);
-  background: var(--surface2); border:1px solid var(--border);
-  padding: 2px 8px; border-radius:99px;
-}
+.master-count { font-size:11px; color:var(--muted); background:var(--surface2); border:1px solid var(--border); padding:2px 8px; border-radius:99px; }
 .master-actions { display:flex; gap:6px; margin-left:8px; }
-.master-body { display:none; padding: 0 16px 16px; }
+.master-body { display:none; padding:0 16px 16px; }
 .master-block.open .master-body { display:block; }
 
-/* ── SUB PROMPT CARD ── */
-.sub-card {
-  border: 1px solid var(--border); border-radius:10px;
-  margin-bottom: 8px; overflow:hidden;
-  background: var(--bg); transition: border-color 0.15s;
-}
+/* SUB CARD */
+.sub-card { border:1px solid var(--border); border-radius:10px; margin-bottom:8px; overflow:hidden; background:var(--bg); transition:border-color 0.15s; }
 .sub-card:last-child { margin-bottom:0; }
-.sub-card:hover { border-color: #363645; }
-.sub-header {
-  display: flex; align-items: flex-start; gap:12px;
-  padding: 12px 16px; cursor: pointer;
-}
-.sub-chevron {
-  color: var(--muted); font-size:10px; margin-top:4px;
-  transition: transform 0.2s; flex-shrink:0;
-}
-.sub-card.open .sub-chevron { transform: rotate(90deg); }
+.sub-card:hover { border-color:#363645; }
+.sub-header { display:flex; align-items:flex-start; gap:12px; padding:12px 16px; cursor:pointer; }
+.sub-chevron { color:var(--muted); font-size:10px; margin-top:4px; transition:transform 0.2s; flex-shrink:0; }
+.sub-card.open .sub-chevron { transform:rotate(90deg); }
 .sub-title-area { flex:1; min-width:0; }
 .sub-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .sub-meta { display:flex; gap:6px; flex-wrap:wrap; }
@@ -179,81 +100,90 @@ body {
 .tag.date { color:var(--green); border-color:rgba(110,184,169,0.25); background:rgba(110,184,169,0.07); }
 .sub-body { display:none; padding:0 16px 14px; }
 .sub-card.open .sub-body { display:block; }
-.prompt-text {
-  background: var(--surface2); border:1px solid var(--border);
-  border-radius:8px; padding:12px 14px;
-  font-family:'DM Mono',monospace; font-size:12px; color:#c8ccd4;
-  line-height:1.75; white-space:pre-wrap; word-break:break-word; position:relative;
-}
-.copy-btn {
-  position:absolute; top:8px; right:8px;
-  padding:3px 9px; background:var(--surface); border:1px solid var(--border);
-  border-radius:6px; color:var(--muted); font-size:11px; cursor:pointer;
-  font-family:'DM Sans',sans-serif; transition:all 0.15s;
-}
+.prompt-text { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 14px; font-family:'DM Mono',monospace; font-size:12px; color:#c8ccd4; line-height:1.75; white-space:pre-wrap; word-break:break-word; position:relative; }
+.copy-btn { position:absolute; top:8px; right:8px; padding:3px 9px; background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--muted); font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
 .copy-btn:hover { color:var(--text); border-color:var(--accent); }
 .copy-btn.copied { color:var(--green); border-color:var(--green); }
 .sub-notes { margin-top:8px; font-size:12px; color:var(--muted); font-style:italic; }
 .sub-actions { display:flex; gap:6px; margin-top:10px; }
-
-/* ── ADD SUB PROMPT inline ── */
-.add-sub-btn {
-  width:100%; margin-top:10px;
-  padding: 9px; border-radius:8px;
-  border: 1px dashed var(--border); background: transparent;
-  color: var(--muted); font-family:'DM Sans',sans-serif; font-size:13px;
-  cursor:pointer; transition:all 0.2s; text-align:center;
-}
+.add-sub-btn { width:100%; margin-top:10px; padding:9px; border-radius:8px; border:1px dashed var(--border); background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; transition:all 0.2s; text-align:center; }
 .add-sub-btn:hover { border-color:var(--accent); color:var(--accent); background:rgba(200,169,110,0.04); }
 
-/* ── EMPTY ── */
+/* EMPTY */
 .empty-state { text-align:center; padding:48px 24px; color:var(--muted); }
 .empty-state .icon { font-size:36px; margin-bottom:10px; }
 
-/* ── MODAL ── */
-.modal-overlay {
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,0.72); z-index:999;
-  align-items:center; justify-content:center;
-  backdrop-filter:blur(4px);
-}
+/* MODAL */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); z-index:999; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
 .modal-overlay.open { display:flex; }
-.modal {
-  background:var(--surface); border:1px solid var(--border);
-  border-radius:14px; width:520px; max-width:92vw;
-  max-height:88vh; overflow-y:auto; padding:28px;
-}
-.modal h3 { font-family:'Playfair Display',serif; font-size:20px; margin-bottom:20px; color:var(--text); }
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:14px; width:520px; max-width:92vw; max-height:88vh; overflow-y:auto; padding:28px; }
+.modal h3 { font-family:'Playfair Display',serif; font-size:20px; margin-bottom:6px; color:var(--text); }
+.modal .subtitle { font-size:13px; color:var(--muted); margin-bottom:20px; }
 .form-group { margin-bottom:14px; }
 .form-group label { display:block; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:5px; }
-.form-group input, .form-group textarea, .form-group select {
-  width:100%; background:var(--surface2); border:1px solid var(--border);
-  border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif;
-  font-size:13px; padding:9px 12px; outline:none; transition:border-color 0.2s; resize:vertical;
-}
-.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--accent); }
+.form-group input, .form-group textarea, .form-group select { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:13px; padding:9px 12px; outline:none; transition:border-color 0.2s; resize:vertical; }
+.form-group input:focus, .form-group textarea:focus { border-color:var(--accent); }
 .form-group textarea { min-height:90px; }
 .form-group select option { background:var(--surface2); }
+.form-hint { font-size:11px; color:var(--muted); margin-top:5px; }
+.form-hint a { color:var(--accent); }
 .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:18px; }
+
+/* SETUP SCREEN */
+#setup-screen { display:none; position:fixed; inset:0; background:var(--bg); z-index:500; align-items:center; justify-content:center; }
+#setup-screen.show { display:flex; }
+.setup-box { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:36px; width:480px; max-width:92vw; }
+.setup-box h2 { font-family:'Playfair Display',serif; font-size:24px; color:var(--accent); margin-bottom:8px; }
+.setup-box p { font-size:13px; color:var(--muted); margin-bottom:24px; line-height:1.7; }
+.setup-steps { margin-bottom:24px; }
+.setup-step { display:flex; gap:12px; margin-bottom:12px; align-items:flex-start; }
+.step-num { width:22px; height:22px; border-radius:50%; background:var(--accent); color:#0e0e10; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.step-text { font-size:13px; color:var(--text); line-height:1.6; }
+.step-text a { color:var(--accent); }
+.setup-input-group { display:flex; gap:8px; margin-top:20px; }
+.setup-input-group input { flex:1; padding:10px 14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'DM Mono',monospace; font-size:13px; outline:none; transition:border-color 0.2s; }
+.setup-input-group input:focus { border-color:var(--accent); }
+#setup-error { font-size:12px; color:var(--red); margin-top:8px; display:none; }
 
 @media(max-width:720px){
   #sidebar{display:none;}
   #main{margin-left:0;padding:20px 16px 48px;}
   #stats{flex-wrap:wrap;}
+  .topbar-right .btn:not(.primary){display:none;}
 }
 </style>
 </head>
 <body>
 
+<!-- SETUP SCREEN -->
+<div id="setup-screen">
+  <div class="setup-box">
+    <h2>✦ Prompt Library</h2>
+    <p>Hubungkan ke GitHub Gist agar prompt kamu tersinkron di semua perangkat.</p>
+    <div class="setup-steps">
+      <div class="setup-step"><div class="step-num">1</div><div class="step-text">Buka <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a></div></div>
+      <div class="setup-step"><div class="step-num">2</div><div class="step-text">Klik <b>Generate new token (classic)</b></div></div>
+      <div class="setup-step"><div class="step-num">3</div><div class="step-text">Centang scope <b>gist</b> saja, lalu generate</div></div>
+      <div class="setup-step"><div class="step-num">4</div><div class="step-text">Paste token di bawah ini</div></div>
+    </div>
+    <div class="setup-input-group">
+      <input id="token-input" type="password" placeholder="github_pat_...">
+      <button class="btn primary" onclick="connectGist()">Sambungkan</button>
+    </div>
+    <div id="setup-error"></div>
+  </div>
+</div>
+
+<!-- TOPBAR -->
 <header id="topbar">
   <span class="logo">✦ Prompt Library</span>
   <div class="topbar-div"></div>
   <input id="search-box" type="text" placeholder="🔍  Cari prompt..." oninput="doSearch(this.value)">
   <div class="topbar-right">
-    <button class="btn" onclick="exportData()">⬇ Export</button>
-    <button class="btn" onclick="document.getElementById('imp').click()">⬆ Import</button>
-    <input id="imp" type="file" accept=".json" style="display:none" onchange="importData(event)">
-    <button class="btn primary" onclick="openMasterModal()">+ Master Prompt</button>
+    <div id="sync-status"><div id="sync-dot"></div><span id="sync-text">–</span></div>
+    <button class="btn" onclick="forcSync()" title="Sync sekarang">↻ Sync</button>
+    <button class="btn" onclick="showSettings()">⚙</button>
+    <button class="btn primary" onclick="openMasterModal()">+ Master</button>
   </div>
 </header>
 
@@ -263,7 +193,7 @@ body {
     <div id="stats">
       <div class="stat"><div class="num" id="s-masters">0</div><div class="lbl">Master Prompt</div></div>
       <div class="stat"><div class="num" id="s-subs">0</div><div class="lbl">Total Sub Prompt</div></div>
-      <div class="stat"><div class="num" id="s-month">0</div><div class="lbl">Ditambah Bulan Ini</div></div>
+      <div class="stat"><div class="num" id="s-month">0</div><div class="lbl">Bulan Ini</div></div>
     </div>
     <div id="tab-bar"></div>
     <div id="content"></div>
@@ -284,14 +214,12 @@ body {
   </div>
 </div>
 
-<!-- SUB PROMPT MODAL -->
+<!-- SUB MODAL -->
 <div class="modal-overlay" id="sub-modal">
   <div class="modal">
     <h3 id="sub-modal-title">Tambah Sub Prompt</h3>
-    <div class="form-group"><label>Master Prompt *</label>
-      <select id="s-master"></select>
-    </div>
-    <div class="form-group"><label>Judul Sub Prompt *</label><input id="s-title" type="text" placeholder="Contoh: Email Formal ke Klien"></div>
+    <div class="form-group"><label>Master Prompt *</label><select id="s-master"></select></div>
+    <div class="form-group"><label>Judul *</label><input id="s-title" type="text" placeholder="Contoh: Email Formal ke Klien"></div>
     <div class="form-group"><label>Isi Prompt *</label><textarea id="s-prompt" placeholder="Tulis prompt kamu di sini..."></textarea></div>
     <div class="form-group"><label>Model / Platform</label><input id="s-model" type="text" placeholder="Claude, GPT-4, Gemini..."></div>
     <div class="form-group"><label>Tags (pisahkan koma)</label><input id="s-tags" type="text" placeholder="kreatif, formal, analisis"></div>
@@ -303,34 +231,184 @@ body {
   </div>
 </div>
 
+<!-- SETTINGS MODAL -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal">
+    <h3>Pengaturan Sync</h3>
+    <p class="subtitle">Data tersimpan di GitHub Gist milikmu.</p>
+    <div class="form-group">
+      <label>GitHub Token</label>
+      <input id="settings-token" type="password" placeholder="github_pat_...">
+      <div class="form-hint">Token hanya disimpan di browser ini. <a href="https://github.com/settings/tokens" target="_blank">Buat token baru</a></div>
+    </div>
+    <div class="form-group">
+      <label>Gist ID (otomatis terisi)</label>
+      <input id="settings-gist-id" type="text" placeholder="Akan terisi otomatis setelah connect" readonly style="opacity:0.5">
+    </div>
+    <div class="modal-actions">
+      <button class="btn danger" onclick="disconnectGist()">Disconnect</button>
+      <button class="btn" onclick="closeSettings()">Tutup</button>
+      <button class="btn primary" onclick="saveSettings()">Simpan</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const KEY = 'pl_v2';
+// ── CONFIG ────────────────────────────────────────────────
+const LS_TOKEN  = 'pl_gh_token';
+const LS_GIST   = 'pl_gist_id';
+const LS_DATA   = 'pl_data_v2';
+const GIST_FILE = 'prompt-library.json';
+
 let activeTab = 'all';
 let editMasterId = null;
 let editSubId = null;
 let subTargetMasterId = null;
+let isSyncing = false;
+
+// ── GIST API ─────────────────────────────────────────────
+function getToken() { return localStorage.getItem(LS_TOKEN); }
+function getGistId() { return localStorage.getItem(LS_GIST); }
+
+async function gistRequest(method, path, body) {
+  const res = await fetch('https://api.github.com' + path, {
+    method,
+    headers: {
+      'Authorization': 'token ' + getToken(),
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github.v3+json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res.json();
+}
+
+async function loadFromGist() {
+  const gistId = getGistId();
+  if (!gistId) return null;
+  const data = await gistRequest('GET', '/gists/' + gistId);
+  const content = data.files[GIST_FILE]?.content;
+  if (!content) return null;
+  return JSON.parse(content);
+}
+
+async function saveToGist(data) {
+  const gistId = getGistId();
+  const body = { files: { [GIST_FILE]: { content: JSON.stringify(data, null, 2) } } };
+  if (gistId) {
+    await gistRequest('PATCH', '/gists/' + gistId, body);
+  } else {
+    body.description = 'Prompt Library Data';
+    body.public = false;
+    const res = await gistRequest('POST', '/gists', body);
+    localStorage.setItem(LS_GIST, res.id);
+  }
+}
+
+// ── CONNECT FLOW ─────────────────────────────────────────
+async function connectGist() {
+  const token = document.getElementById('token-input').value.trim();
+  const errEl = document.getElementById('setup-error');
+  errEl.style.display = 'none';
+
+  if (!token) { showSetupError('Token tidak boleh kosong.'); return; }
+
+  const btn = document.querySelector('#setup-screen .btn.primary');
+  btn.textContent = 'Menyambungkan...'; btn.disabled = true;
+
+  try {
+    // validate token
+    const res = await fetch('https://api.github.com/user', {
+      headers: { 'Authorization': 'token ' + token }
+    });
+    if (!res.ok) throw new Error('Token tidak valid');
+
+    localStorage.setItem(LS_TOKEN, token);
+
+    // try load existing gist
+    setSyncStatus('loading', 'Mencari data...');
+    const gists = await gistRequest('GET', '/gists');
+    const existing = gists.find(g => g.files[GIST_FILE]);
+
+    if (existing) {
+      localStorage.setItem(LS_GIST, existing.id);
+      const d = await loadFromGist();
+      if (d) { localStorage.setItem(LS_DATA, JSON.stringify(d)); }
+    } else {
+      // create new gist with default data
+      const d = defaultData();
+      localStorage.setItem(LS_DATA, JSON.stringify(d));
+      await saveToGist(d);
+    }
+
+    document.getElementById('setup-screen').classList.remove('show');
+    setSyncStatus('ok', 'Tersinkron');
+    render();
+  } catch(e) {
+    showSetupError('Gagal: ' + e.message + '. Pastikan token valid dan scope gist dicentang.');
+    btn.textContent = 'Sambungkan'; btn.disabled = false;
+  }
+}
+
+function showSetupError(msg) {
+  const el = document.getElementById('setup-error');
+  el.textContent = msg; el.style.display = 'block';
+}
+
+// ── SYNC STATUS ──────────────────────────────────────────
+function setSyncStatus(state, text) {
+  const dot = document.getElementById('sync-dot');
+  const txt = document.getElementById('sync-text');
+  dot.className = state; txt.textContent = text;
+}
+
+async function forcSync() {
+  if (isSyncing) return;
+  isSyncing = true;
+  setSyncStatus('loading', 'Menyinkron...');
+  try {
+    const d = await loadFromGist();
+    if (d) {
+      localStorage.setItem(LS_DATA, JSON.stringify(d));
+      render();
+    }
+    setSyncStatus('ok', 'Tersinkron ' + new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+  } catch(e) {
+    setSyncStatus('err', 'Gagal sync');
+  }
+  isSyncing = false;
+}
 
 // ── DATA ─────────────────────────────────────────────────
 function load() {
-  try { return JSON.parse(localStorage.getItem(KEY)) || defaultData(); }
+  try { return JSON.parse(localStorage.getItem(LS_DATA)) || defaultData(); }
   catch { return defaultData(); }
 }
-function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
+
+async function persist(d) {
+  localStorage.setItem(LS_DATA, JSON.stringify(d));
+  setSyncStatus('loading', 'Menyimpan...');
+  try {
+    await saveToGist(d);
+    setSyncStatus('ok', 'Tersimpan ' + new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+  } catch(e) {
+    setSyncStatus('err', 'Gagal simpan ke Gist');
+  }
+}
 
 function defaultData() {
   return {
     masters: [
       { id:'m1', name:'Writing', icon:'✍️', desc:'Prompt untuk menulis konten, email, artikel' },
-      { id:'m2', name:'Coding', icon:'💻', desc:'Prompt untuk programming dan debugging' },
-      { id:'m3', name:'Business', icon:'💼', desc:'Prompt untuk analisis dan keperluan bisnis' },
+      { id:'m2', name:'Coding',  icon:'💻', desc:'Prompt untuk programming dan debugging' },
+      { id:'m3', name:'Business',icon:'💼', desc:'Prompt untuk analisis dan keperluan bisnis' },
     ],
     subs: [
       { id:'sub1', masterId:'m1', title:'Email Profesional', prompt:'Tulis email profesional dengan nada [formal/santai] kepada [NAMA] tentang:\n\n[TOPIK]\n\nPastikan:\n- Pembukaan sopan\n- Isi jelas dan padat\n- Permintaan spesifik\n- Penutup profesional', model:'Claude', tags:['email','formal'], notes:'Ganti bagian dalam kurung.', date:new Date().toISOString() },
-      { id:'sub2', masterId:'m1', title:'Artikel Blog', prompt:'Tulis artikel blog dengan struktur:\n- Headline yang menarik\n- Hook di paragraf pertama\n- 3-5 poin utama dengan contoh\n- Call to action\n\nTopik: [TOPIK]\nTone: [formal/casual]\nPanjang: [jumlah kata]', model:'Claude', tags:['blog','konten'], notes:'Cocok untuk blog dan Medium.', date:new Date().toISOString() },
+      { id:'sub2', masterId:'m1', title:'Artikel Blog', prompt:'Tulis artikel blog:\n- Headline menarik\n- Hook di paragraf pertama\n- 3-5 poin utama dengan contoh\n- Call to action\n\nTopik: [TOPIK]\nTone: [formal/casual]\nPanjang: [kata]', model:'Claude', tags:['blog','konten'], notes:'', date:new Date().toISOString() },
       { id:'sub3', masterId:'m2', title:'Debug Code', prompt:'Debug kode berikut:\n1. Identifikasi bug\n2. Penjelasan penyebab\n3. Kode yang diperbaiki\n4. Saran optimisasi\n\nBahasa: [BAHASA]\n\n```\n[KODE]\n```\n\nError: [ERROR MESSAGE]', model:'Claude', tags:['debug'], notes:'Sertakan error message.', date:new Date().toISOString() },
-      { id:'sub4', masterId:'m2', title:'Code Review', prompt:'Lakukan code review pada kode berikut. Berikan feedback tentang:\n- Readability & naming\n- Performance issues\n- Security concerns\n- Best practices\n- Refactoring suggestions\n\n```\n[KODE]\n```', model:'Claude', tags:['review','kualitas'], notes:'', date:new Date().toISOString() },
-      { id:'sub5', masterId:'m3', title:'Analisis Kompetitor', prompt:'Analisis kompetitor untuk bisnis saya:\n\nBisnis saya: [DESKRIPSI]\nKompetitor: [NAMA KOMPETITOR]\n\nAnalisis:\n1. Strengths & Weaknesses mereka\n2. Strategi yang mereka pakai\n3. Gap yang bisa saya manfaatkan\n4. Rekomendasi diferensiasi', model:'Claude', tags:['analisis','strategi'], notes:'', date:new Date().toISOString() },
-      { id:'sub6', masterId:'m3', title:'Proposal Bisnis', prompt:'Buat proposal bisnis untuk:\n\nProduk/Layanan: [NAMA]\nTarget Market: [SIAPA]\nProblem: [APA]\nBudget: [NOMINAL]\n\nStruktur:\n1. Executive Summary\n2. Problem Statement\n3. Solution\n4. Timeline & Budget\n5. Expected Outcome', model:'Claude', tags:['proposal','formal'], notes:'Cocok untuk pitch deck.', date:new Date().toISOString() },
+      { id:'sub4', masterId:'m3', title:'Proposal Bisnis', prompt:'Buat proposal bisnis:\n\nProduk/Layanan: [NAMA]\nTarget: [SIAPA]\nProblem: [APA]\nBudget: [NOMINAL]\n\n1. Executive Summary\n2. Problem Statement\n3. Solution\n4. Timeline & Budget\n5. Expected Outcome', model:'Claude', tags:['proposal','formal'], notes:'', date:new Date().toISOString() },
     ]
   };
 }
@@ -343,7 +421,7 @@ function render(q) {
 
   // stats
   const now = new Date();
-  const thisMonth = subs.filter(s => { const d = new Date(s.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+  const thisMonth = subs.filter(s => { const d=new Date(s.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
   document.getElementById('s-masters').textContent = masters.length;
   document.getElementById('s-subs').textContent = subs.length;
   document.getElementById('s-month').textContent = thisMonth.length;
@@ -359,7 +437,7 @@ function render(q) {
   // tabs
   let tabHtml = `<button class="tab ${activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua <span class="tc">${subs.length}</span></button>`;
   masters.forEach(m => {
-    const cnt = subs.filter(s => s.masterId===m.id && matchSub(s,ql)).length;
+    const cnt = subs.filter(s=>s.masterId===m.id&&matchSub(s,ql)).length;
     if (ql && cnt===0) return;
     tabHtml += `<button class="tab ${activeTab===m.id?'active':''}" onclick="setTab('${m.id}')">${m.icon} ${m.name} <span class="tc">${ql?cnt:subs.filter(s=>s.masterId===m.id).length}</span></button>`;
   });
@@ -368,21 +446,19 @@ function render(q) {
   // content
   const content = document.getElementById('content');
   content.innerHTML = '';
-
-  const visibleMasters = activeTab === 'all' ? masters : masters.filter(m => m.id === activeTab);
+  const visMasters = activeTab==='all' ? masters : masters.filter(m=>m.id===activeTab);
   let any = false;
-
-  visibleMasters.forEach(m => {
-    const mSubs = subs.filter(s => s.masterId===m.id && matchSub(s,ql));
+  visMasters.forEach(m => {
+    const mSubs = subs.filter(s=>s.masterId===m.id&&matchSub(s,ql));
     if (ql && mSubs.length===0) return;
     any = true;
     content.appendChild(buildMasterBlock(m, ql ? mSubs : subs.filter(s=>s.masterId===m.id)));
   });
-
   if (!any) content.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>Tidak ada prompt yang cocok.</p></div>`;
 
-  // update sub master select
-  updateMasterSelect(masters);
+  // update select
+  const sel = document.getElementById('s-master');
+  sel.innerHTML = masters.map(m=>`<option value="${m.id}">${m.icon} ${m.name}</option>`).join('');
 }
 
 function buildMasterBlock(m, mSubs) {
@@ -395,7 +471,7 @@ function buildMasterBlock(m, mSubs) {
       <span class="master-icon">${m.icon}</span>
       <div style="flex:1">
         <div class="master-title">${m.name}</div>
-        ${m.desc ? `<div class="master-desc">${m.desc}</div>` : ''}
+        ${m.desc?`<div class="master-desc">${m.desc}</div>`:''}
       </div>
       <span class="master-count">${mSubs.length} prompt</span>
       <div class="master-actions" onclick="event.stopPropagation()">
@@ -406,12 +482,8 @@ function buildMasterBlock(m, mSubs) {
     <div class="master-body" id="mb-body-${m.id}"></div>
   `;
   const body = block.querySelector('.master-body');
-  if (mSubs.length === 0) {
-    body.innerHTML = `<div style="padding:12px 4px;color:var(--muted);font-size:13px;font-style:italic">Belum ada sub prompt. Tambah yuk!</div>`;
-  } else {
-    mSubs.forEach(s => body.appendChild(buildSubCard(s)));
-  }
-  // add sub btn
+  if (!mSubs.length) body.innerHTML = `<div style="padding:10px 4px;color:var(--muted);font-size:13px;font-style:italic">Belum ada sub prompt.</div>`;
+  else mSubs.forEach(s => body.appendChild(buildSubCard(s)));
   const addBtn = document.createElement('button');
   addBtn.className = 'add-sub-btn';
   addBtn.textContent = '+ Tambah Sub Prompt';
@@ -425,9 +497,9 @@ function buildSubCard(s) {
   card.className = 'sub-card';
   card.id = 'sc-' + s.id;
   const tags = (s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
-  const modelTag = s.model ? `<span class="tag model">${s.model}</span>` : '';
-  const dateStr = s.date ? new Date(s.date).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) : '';
-  const dateTag = dateStr ? `<span class="tag date">${dateStr}</span>` : '';
+  const modelTag = s.model?`<span class="tag model">${s.model}</span>`:'';
+  const dateStr = s.date?new Date(s.date).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'';
+  const dateTag = dateStr?`<span class="tag date">${dateStr}</span>`:'';
   card.innerHTML = `
     <div class="sub-header" onclick="toggleSub('${s.id}')">
       <span class="sub-chevron">▶</span>
@@ -438,7 +510,7 @@ function buildSubCard(s) {
     </div>
     <div class="sub-body">
       <div class="prompt-text" id="pt-${s.id}">${escH(s.prompt)}<button class="copy-btn" onclick="doCopy(event,'pt-${s.id}')">Salin</button></div>
-      ${s.notes ? `<div class="sub-notes">📌 ${escH(s.notes)}</div>` : ''}
+      ${s.notes?`<div class="sub-notes">📌 ${escH(s.notes)}</div>`:''}
       <div class="sub-actions">
         <button class="btn sm" onclick="openEditSub('${s.id}')">✏️ Edit</button>
         <button class="btn sm danger" onclick="deleteSub('${s.id}')">🗑 Hapus</button>
@@ -448,149 +520,138 @@ function buildSubCard(s) {
   return card;
 }
 
-// ── TOGGLE ────────────────────────────────────────────────
+// ── INTERACTIONS ─────────────────────────────────────────
 function toggleMaster(id) { document.getElementById('mb-'+id).classList.toggle('open'); }
 function toggleSub(id) { document.getElementById('sc-'+id).classList.toggle('open'); }
-function setTab(id) { activeTab = id; render(); }
+function setTab(id) { activeTab=id; render(); }
 function doSearch(q) { render(q); }
-
-// ── COPY ─────────────────────────────────────────────────
 function doCopy(e, id) {
   e.stopPropagation();
   const text = document.getElementById(id).innerText.replace('Salin','').trim();
-  navigator.clipboard.writeText(text).then(() => {
-    const b = e.target; b.textContent='✓ Disalin'; b.classList.add('copied');
+  navigator.clipboard.writeText(text).then(()=>{
+    const b=e.target; b.textContent='✓ Disalin'; b.classList.add('copied');
     setTimeout(()=>{ b.textContent='Salin'; b.classList.remove('copied'); },2000);
   });
 }
 
-// ── MASTER MODAL ──────────────────────────────────────────
+// ── MASTER MODAL ─────────────────────────────────────────
 function openMasterModal() {
-  editMasterId = null;
-  document.getElementById('master-modal-title').textContent = 'Tambah Master Prompt';
-  document.getElementById('m-name').value = '';
-  document.getElementById('m-icon').value = '';
-  document.getElementById('m-desc').value = '';
+  editMasterId=null;
+  document.getElementById('master-modal-title').textContent='Tambah Master Prompt';
+  ['m-name','m-icon','m-desc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('master-modal').classList.add('open');
 }
 function openEditMaster(id) {
-  const { masters } = load();
-  const m = masters.find(x=>x.id===id); if (!m) return;
-  editMasterId = id;
-  document.getElementById('master-modal-title').textContent = 'Edit Master Prompt';
-  document.getElementById('m-name').value = m.name;
-  document.getElementById('m-icon').value = m.icon;
-  document.getElementById('m-desc').value = m.desc || '';
+  const m=load().masters.find(x=>x.id===id); if(!m) return;
+  editMasterId=id;
+  document.getElementById('master-modal-title').textContent='Edit Master Prompt';
+  document.getElementById('m-name').value=m.name;
+  document.getElementById('m-icon').value=m.icon;
+  document.getElementById('m-desc').value=m.desc||'';
   document.getElementById('master-modal').classList.add('open');
 }
 function closeMasterModal() { document.getElementById('master-modal').classList.remove('open'); editMasterId=null; }
-function saveMaster() {
-  const name = document.getElementById('m-name').value.trim();
-  if (!name) { alert('Nama master wajib diisi!'); return; }
-  const d = load();
-  const entry = { name, icon: document.getElementById('m-icon').value.trim() || '📁', desc: document.getElementById('m-desc').value.trim() };
-  if (editMasterId) {
-    const idx = d.masters.findIndex(x=>x.id===editMasterId);
-    if (idx!==-1) d.masters[idx] = { ...d.masters[idx], ...entry };
-  } else {
-    d.masters.push({ id:'m'+Date.now(), ...entry });
-  }
-  save(d); closeMasterModal(); render();
+async function saveMaster() {
+  const name=document.getElementById('m-name').value.trim();
+  if(!name){alert('Nama master wajib diisi!');return;}
+  const d=load();
+  const entry={name,icon:document.getElementById('m-icon').value.trim()||'📁',desc:document.getElementById('m-desc').value.trim()};
+  if(editMasterId){ const idx=d.masters.findIndex(x=>x.id===editMasterId); if(idx!==-1) d.masters[idx]={...d.masters[idx],...entry}; }
+  else d.masters.push({id:'m'+Date.now(),...entry});
+  closeMasterModal(); await persist(d); render();
 }
-function deleteMaster(id) {
-  if (!confirm('Hapus master prompt ini beserta semua sub prompt di dalamnya?')) return;
-  const d = load();
-  d.masters = d.masters.filter(x=>x.id!==id);
-  d.subs = d.subs.filter(x=>x.masterId!==id);
-  save(d);
-  if (activeTab===id) activeTab='all';
-  render();
+async function deleteMaster(id) {
+  if(!confirm('Hapus master prompt beserta semua sub prompt di dalamnya?')) return;
+  const d=load();
+  d.masters=d.masters.filter(x=>x.id!==id);
+  d.subs=d.subs.filter(x=>x.masterId!==id);
+  if(activeTab===id) activeTab='all';
+  await persist(d); render();
 }
 
-// ── SUB MODAL ─────────────────────────────────────────────
-function updateMasterSelect(masters) {
-  const sel = document.getElementById('s-master');
-  sel.innerHTML = masters.map(m=>`<option value="${m.id}">${m.icon} ${m.name}</option>`).join('');
-}
+// ── SUB MODAL ────────────────────────────────────────────
 function openSubModal(masterId) {
-  editSubId = null; subTargetMasterId = masterId || null;
-  document.getElementById('sub-modal-title').textContent = 'Tambah Sub Prompt';
+  editSubId=null; subTargetMasterId=masterId||null;
+  document.getElementById('sub-modal-title').textContent='Tambah Sub Prompt';
   ['s-title','s-prompt','s-model','s-tags','s-notes'].forEach(id=>document.getElementById(id).value='');
-  if (masterId) document.getElementById('s-master').value = masterId;
+  if(masterId) document.getElementById('s-master').value=masterId;
   document.getElementById('sub-modal').classList.add('open');
 }
 function openEditSub(id) {
-  const { subs } = load();
-  const s = subs.find(x=>x.id===id); if (!s) return;
-  editSubId = id;
-  document.getElementById('sub-modal-title').textContent = 'Edit Sub Prompt';
-  document.getElementById('s-master').value = s.masterId;
-  document.getElementById('s-title').value = s.title;
-  document.getElementById('s-prompt').value = s.prompt;
-  document.getElementById('s-model').value = s.model||'';
-  document.getElementById('s-tags').value = (s.tags||[]).join(', ');
-  document.getElementById('s-notes').value = s.notes||'';
+  const s=load().subs.find(x=>x.id===id); if(!s) return;
+  editSubId=id;
+  document.getElementById('sub-modal-title').textContent='Edit Sub Prompt';
+  document.getElementById('s-master').value=s.masterId;
+  document.getElementById('s-title').value=s.title;
+  document.getElementById('s-prompt').value=s.prompt;
+  document.getElementById('s-model').value=s.model||'';
+  document.getElementById('s-tags').value=(s.tags||[]).join(', ');
+  document.getElementById('s-notes').value=s.notes||'';
   document.getElementById('sub-modal').classList.add('open');
 }
-function closeSubModal() { document.getElementById('sub-modal').classList.remove('open'); editSubId=null; subTargetMasterId=null; }
-function saveSub() {
-  const masterId = document.getElementById('s-master').value;
-  const title = document.getElementById('s-title').value.trim();
-  const prompt = document.getElementById('s-prompt').value.trim();
-  if (!title||!prompt) { alert('Judul dan Prompt wajib diisi!'); return; }
-  const d = load();
-  const tags = document.getElementById('s-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const entry = { masterId, title, prompt, model:document.getElementById('s-model').value.trim(), tags, notes:document.getElementById('s-notes').value.trim() };
-  if (editSubId) {
-    const idx = d.subs.findIndex(x=>x.id===editSubId);
-    if (idx!==-1) d.subs[idx] = { ...d.subs[idx], ...entry };
-  } else {
-    d.subs.push({ id:'s'+Date.now(), ...entry, date:new Date().toISOString() });
-  }
-  save(d); closeSubModal(); render();
+function closeSubModal() { document.getElementById('sub-modal').classList.remove('open'); editSubId=null; }
+async function saveSub() {
+  const masterId=document.getElementById('s-master').value;
+  const title=document.getElementById('s-title').value.trim();
+  const prompt=document.getElementById('s-prompt').value.trim();
+  if(!title||!prompt){alert('Judul dan Prompt wajib diisi!');return;}
+  const d=load();
+  const tags=document.getElementById('s-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const entry={masterId,title,prompt,model:document.getElementById('s-model').value.trim(),tags,notes:document.getElementById('s-notes').value.trim()};
+  if(editSubId){ const idx=d.subs.findIndex(x=>x.id===editSubId); if(idx!==-1) d.subs[idx]={...d.subs[idx],...entry}; }
+  else d.subs.push({id:'s'+Date.now(),...entry,date:new Date().toISOString()});
+  closeSubModal(); await persist(d); render();
 }
-function deleteSub(id) {
-  if (!confirm('Hapus sub prompt ini?')) return;
-  const d = load(); d.subs = d.subs.filter(x=>x.id!==id); save(d); render();
+async function deleteSub(id) {
+  if(!confirm('Hapus sub prompt ini?')) return;
+  const d=load(); d.subs=d.subs.filter(x=>x.id!==id);
+  await persist(d); render();
 }
 
-// ── EXPORT / IMPORT ──────────────────────────────────────
-function exportData() {
-  const blob = new Blob([JSON.stringify(load(),null,2)],{type:'application/json'});
-  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download='prompt-library-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+// ── SETTINGS ─────────────────────────────────────────────
+function showSettings() {
+  document.getElementById('settings-token').value=getToken()||'';
+  document.getElementById('settings-gist-id').value=getGistId()||'';
+  document.getElementById('settings-modal').classList.add('open');
 }
-function importData(e) {
-  const file = e.target.files[0]; if(!file) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    try {
-      const imp = JSON.parse(ev.target.result);
-      if (!imp.masters||!imp.subs) throw new Error();
-      const d = load();
-      imp.masters.forEach(m=>{ if(!d.masters.find(x=>x.id===m.id)) d.masters.push(m); });
-      imp.subs.forEach(s=>{ if(!d.subs.find(x=>x.id===s.id)) d.subs.push(s); });
-      save(d); render(); alert(`✓ Import berhasil!`);
-    } catch { alert('File tidak valid.'); }
-  };
-  r.readAsText(file); e.target.value='';
+function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
+async function saveSettings() {
+  const token=document.getElementById('settings-token').value.trim();
+  if(token) localStorage.setItem(LS_TOKEN,token);
+  closeSettings();
+  await forcSync();
+}
+function disconnectGist() {
+  if(!confirm('Disconnect dan hapus token dari browser ini?')) return;
+  [LS_TOKEN,LS_GIST].forEach(k=>localStorage.removeItem(k));
+  closeSettings();
+  document.getElementById('setup-screen').classList.add('show');
 }
 
 // ── HELPERS ──────────────────────────────────────────────
-function matchSub(s, q) {
-  if (!q) return true;
-  return (s.title+s.prompt+(s.tags||[]).join(' ')+(s.notes||'')).toLowerCase().includes(q);
-}
-function escH(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function matchSub(s,q){ if(!q)return true; return(s.title+s.prompt+(s.tags||[]).join(' ')+(s.notes||'')).toLowerCase().includes(q); }
+function escH(s){ return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// close modal on overlay click
-['master-modal','sub-modal'].forEach(id => {
-  document.getElementById(id).addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
+['master-modal','sub-modal','settings-modal'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 });
 
 // ── INIT ─────────────────────────────────────────────────
-if (!localStorage.getItem(KEY)) save(defaultData());
-render();
+(async function init() {
+  if (!getToken()) {
+    document.getElementById('setup-screen').classList.add('show');
+    return;
+  }
+  setSyncStatus('loading','Memuat data...');
+  try {
+    const d = await loadFromGist();
+    if (d) localStorage.setItem(LS_DATA, JSON.stringify(d));
+    setSyncStatus('ok','Tersinkron');
+  } catch(e) {
+    setSyncStatus('err','Offline — data lokal');
+  }
+  render();
+})();
 </script>
 </body>
 </html>
