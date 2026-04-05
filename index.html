@@ -13,13 +13,13 @@
   --border: #2a2a35;
   --accent: #c8a96e;
   --accent2: #7c6aff;
+  --green: #6eb8a9;
   --text: #e8e6e1;
   --muted: #888892;
+  --red: #e07070;
   --sidebar-w: 260px;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -31,766 +31,565 @@ body {
 
 /* ── TOPBAR ── */
 #topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 56px;
+  position: fixed; top:0; left:0; right:0; height:56px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
-  gap: 16px;
-  z-index: 200;
+  display: flex; align-items: center;
+  padding: 0 24px; gap: 14px; z-index: 200;
 }
-
-#topbar .logo {
+.logo {
   font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  color: var(--accent);
-  font-weight: 700;
+  font-size: 18px; color: var(--accent); font-weight: 700;
   white-space: nowrap;
-  margin-right: 8px;
 }
-
-#topbar .divider {
-  width: 1px; height: 20px;
-  background: var(--border);
-  flex-shrink: 0;
-}
-
+.topbar-div { width:1px; height:20px; background:var(--border); flex-shrink:0; }
 #search-box {
-  flex: 1;
-  max-width: 320px;
+  flex:1; max-width:300px;
   padding: 7px 14px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  outline: none;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none;
   transition: border-color 0.2s;
 }
 #search-box:focus { border-color: var(--accent); }
 #search-box::placeholder { color: var(--muted); }
+.topbar-right { margin-left:auto; display:flex; gap:8px; }
 
-.topbar-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-
+/* ── BUTTONS ── */
 .btn {
-  padding: 7px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface2);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
+  padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface2);
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
 }
 .btn:hover { border-color: var(--accent); color: var(--accent); }
-.btn.primary { background: var(--accent); color: #0e0e10; border-color: var(--accent); font-weight: 500; }
+.btn.primary { background: var(--accent); color: #0e0e10; border-color: var(--accent); font-weight:500; }
 .btn.primary:hover { opacity: 0.85; color: #0e0e10; }
+.btn.danger { color: var(--red); border-color: rgba(224,112,112,0.3); }
+.btn.danger:hover { border-color: var(--red); background: rgba(224,112,112,0.08); color: var(--red); }
+.btn.sm { font-size:12px; padding:4px 10px; }
 
 /* ── LAYOUT ── */
-#layout {
-  display: flex;
-  margin-top: 56px;
-  min-height: calc(100vh - 56px);
-}
+#layout { display:flex; margin-top:56px; min-height:calc(100vh - 56px); }
 
 /* ── SIDEBAR ── */
 #sidebar {
-  width: var(--sidebar-w);
-  background: var(--surface);
+  width: var(--sidebar-w); background: var(--surface);
   border-right: 1px solid var(--border);
-  position: fixed;
-  top: 56px; left: 0; bottom: 0;
-  overflow-y: auto;
-  padding: 16px 0 32px;
-  z-index: 100;
+  position: fixed; top:56px; left:0; bottom:0;
+  overflow-y: auto; padding: 16px 0 32px; z-index:100;
 }
-#sidebar::-webkit-scrollbar { width: 3px; }
-#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-.sidebar-label {
-  padding: 12px 18px 6px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  opacity: 0.6;
+#sidebar::-webkit-scrollbar { width:3px; }
+#sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius:4px; }
+.sb-label {
+  padding: 12px 18px 6px; font-size:10px;
+  text-transform: uppercase; letter-spacing:0.1em;
+  color: var(--muted); opacity:0.6;
 }
-
-.sidebar-cat {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  font-size: 13px;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.15s;
-  border-left: 2px solid transparent;
-  user-select: none;
+.sb-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 18px; font-size:13px; color: var(--muted);
+  cursor: pointer; transition: all 0.15s;
+  border-left: 2px solid transparent; user-select: none;
 }
-.sidebar-cat:hover { color: var(--text); background: var(--surface2); }
-.sidebar-cat.active {
-  color: var(--accent);
-  border-left-color: var(--accent);
-  background: rgba(200,169,110,0.06);
+.sb-item:hover { color: var(--text); background: var(--surface2); }
+.sb-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(200,169,110,0.06); }
+.sb-badge {
+  margin-left: auto; font-size:10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  padding: 1px 6px; border-radius: 99px; color: var(--muted);
 }
-.sidebar-cat .cat-badge {
-  margin-left: auto;
-  font-size: 10px;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  padding: 1px 6px;
-  border-radius: 99px;
-  color: var(--muted);
-}
-.sidebar-cat.active .cat-badge {
-  border-color: rgba(200,169,110,0.3);
-  color: var(--accent);
-  background: rgba(200,169,110,0.08);
-}
+.sb-item.active .sb-badge { border-color: rgba(200,169,110,0.3); color: var(--accent); background: rgba(200,169,110,0.08); }
 
 /* ── MAIN ── */
-#main {
-  margin-left: var(--sidebar-w);
-  flex: 1;
-  padding: 28px 40px 60px;
-}
+#main { margin-left: var(--sidebar-w); flex:1; padding: 28px 40px 60px; }
 
 /* ── STATS ── */
-#stats {
-  display: flex;
-  gap: 14px;
-  margin-bottom: 24px;
-}
-.stat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px 18px;
-  flex: 1;
-}
-.stat .num {
-  font-family: 'Playfair Display', serif;
-  font-size: 24px;
-  color: var(--accent);
-  line-height: 1.1;
-}
-.stat .label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+#stats { display:flex; gap:14px; margin-bottom:24px; }
+.stat { background: var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 18px; flex:1; }
+.stat .num { font-family:'Playfair Display',serif; font-size:24px; color:var(--accent); line-height:1.1; }
+.stat .lbl { font-size:11px; color:var(--muted); margin-top:2px; }
 
 /* ── TABS ── */
-#tab-bar {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 22px;
-  flex-wrap: wrap;
+#tab-bar { display:flex; gap:6px; margin-bottom:22px; flex-wrap:wrap; }
+.tab {
+  display: flex; align-items: center; gap:6px;
+  padding: 8px 16px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--muted); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; cursor: pointer; transition: all 0.15s; white-space:nowrap;
 }
+.tab:hover { color: var(--text); border-color: #3a3a48; background: var(--surface2); }
+.tab.active { background: var(--accent); color: #0e0e10; border-color: var(--accent); font-weight:500; }
+.tab .tc { font-size:11px; background:rgba(0,0,0,0.15); padding:1px 6px; border-radius:99px; }
 
-.tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--muted);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
+/* ── MASTER BLOCK ── */
+.master-block {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; margin-bottom: 14px; overflow: hidden;
 }
-.tab-btn:hover { color: var(--text); border-color: #3a3a48; background: var(--surface2); }
-.tab-btn.active {
-  background: var(--accent);
-  color: #0e0e10;
-  border-color: var(--accent);
-  font-weight: 500;
+.master-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 20px; cursor: pointer; user-select: none;
+  transition: background 0.15s;
 }
-.tab-btn .tab-count {
-  font-size: 11px;
-  background: rgba(0,0,0,0.15);
-  padding: 1px 6px;
-  border-radius: 99px;
+.master-header:hover { background: rgba(255,255,255,0.025); }
+.master-chevron {
+  color: var(--accent); font-size:11px;
+  transition: transform 0.25s; flex-shrink:0;
 }
-
-/* ── ACCORDION ── */
-.acc-block {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  margin-bottom: 12px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.acc-block:hover { border-color: #333340; }
-
-.acc-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 20px;
-  cursor: pointer;
-  user-select: none;
-}
-.acc-header:hover { background: rgba(255,255,255,0.02); }
-
-.acc-chevron {
-  color: var(--muted);
-  font-size: 10px;
-  transition: transform 0.25s;
-  flex-shrink: 0;
-}
-.acc-block.open .acc-chevron { transform: rotate(90deg); }
-
-.acc-emoji { font-size: 18px; }
-.acc-title {
+.master-block.open .master-chevron { transform: rotate(90deg); }
+.master-icon { font-size:20px; }
+.master-title {
   font-family: 'Playfair Display', serif;
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text);
-  flex: 1;
+  font-size: 19px; font-weight:700; color: var(--text); flex:1;
 }
-.acc-count {
-  font-size: 11px;
-  color: var(--muted);
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  padding: 2px 8px;
-  border-radius: 99px;
+.master-desc { font-size:12px; color:var(--muted); margin-top:2px; }
+.master-count {
+  font-size:11px; color:var(--muted);
+  background: var(--surface2); border:1px solid var(--border);
+  padding: 2px 8px; border-radius:99px;
 }
-.acc-toggle-btn {
-  font-size: 11px;
-  color: var(--muted);
-  padding: 3px 9px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
-  margin-left: 4px;
-}
-.acc-toggle-btn:hover { color: var(--text); background: var(--surface2); }
+.master-actions { display:flex; gap:6px; margin-left:8px; }
+.master-body { display:none; padding: 0 16px 16px; }
+.master-block.open .master-body { display:block; }
 
-.acc-body {
-  display: none;
-  padding: 0 14px 14px;
+/* ── SUB PROMPT CARD ── */
+.sub-card {
+  border: 1px solid var(--border); border-radius:10px;
+  margin-bottom: 8px; overflow:hidden;
+  background: var(--bg); transition: border-color 0.15s;
 }
-.acc-block.open .acc-body { display: block; }
-
-/* ── PROMPT CARD ── */
-.prompt-card {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  margin-bottom: 8px;
-  overflow: hidden;
-  transition: border-color 0.15s;
-  background: var(--bg);
+.sub-card:last-child { margin-bottom:0; }
+.sub-card:hover { border-color: #363645; }
+.sub-header {
+  display: flex; align-items: flex-start; gap:12px;
+  padding: 12px 16px; cursor: pointer;
 }
-.prompt-card:hover { border-color: #363645; }
-.prompt-card:last-child { margin-bottom: 0; }
-
-.card-header {
-  padding: 12px 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  cursor: pointer;
+.sub-chevron {
+  color: var(--muted); font-size:10px; margin-top:4px;
+  transition: transform 0.2s; flex-shrink:0;
 }
-
-.card-chevron {
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 4px;
-  transition: transform 0.2s;
-  flex-shrink: 0;
-}
-.prompt-card.open .card-chevron { transform: rotate(90deg); }
-
-.card-title-area { flex: 1; min-width: 0; }
-.card-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.card-meta { display: flex; gap: 6px; flex-wrap: wrap; }
-
-.tag {
-  font-size: 11px;
-  padding: 2px 7px;
-  border-radius: 99px;
-  background: var(--surface2);
-  color: var(--muted);
-  border: 1px solid var(--border);
-  font-family: 'DM Mono', monospace;
-}
-.tag.model { color: var(--accent2); border-color: rgba(124,106,255,0.25); background: rgba(124,106,255,0.07); }
-.tag.date { color: #6eb8a9; border-color: rgba(110,184,169,0.25); background: rgba(110,184,169,0.07); }
-
-.card-body { display: none; padding: 0 16px 14px; }
-.prompt-card.open .card-body { display: block; }
-
+.sub-card.open .sub-chevron { transform: rotate(90deg); }
+.sub-title-area { flex:1; min-width:0; }
+.sub-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sub-meta { display:flex; gap:6px; flex-wrap:wrap; }
+.tag { font-size:11px; padding:2px 7px; border-radius:99px; background:var(--surface2); color:var(--muted); border:1px solid var(--border); font-family:'DM Mono',monospace; }
+.tag.model { color:var(--accent2); border-color:rgba(124,106,255,0.25); background:rgba(124,106,255,0.07); }
+.tag.date { color:var(--green); border-color:rgba(110,184,169,0.25); background:rgba(110,184,169,0.07); }
+.sub-body { display:none; padding:0 16px 14px; }
+.sub-card.open .sub-body { display:block; }
 .prompt-text {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 14px;
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: #c8ccd4;
-  line-height: 1.75;
-  white-space: pre-wrap;
-  word-break: break-word;
-  position: relative;
+  background: var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:12px 14px;
+  font-family:'DM Mono',monospace; font-size:12px; color:#c8ccd4;
+  line-height:1.75; white-space:pre-wrap; word-break:break-word; position:relative;
 }
 .copy-btn {
-  position: absolute;
-  top: 8px; right: 8px;
-  padding: 3px 9px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--muted);
-  font-size: 11px;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.15s;
+  position:absolute; top:8px; right:8px;
+  padding:3px 9px; background:var(--surface); border:1px solid var(--border);
+  border-radius:6px; color:var(--muted); font-size:11px; cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:all 0.15s;
 }
-.copy-btn:hover { color: var(--text); border-color: var(--accent); }
-.copy-btn.copied { color: #6eb8a9; border-color: #6eb8a9; }
+.copy-btn:hover { color:var(--text); border-color:var(--accent); }
+.copy-btn.copied { color:var(--green); border-color:var(--green); }
+.sub-notes { margin-top:8px; font-size:12px; color:var(--muted); font-style:italic; }
+.sub-actions { display:flex; gap:6px; margin-top:10px; }
 
-.card-notes {
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--muted);
-  font-style: italic;
+/* ── ADD SUB PROMPT inline ── */
+.add-sub-btn {
+  width:100%; margin-top:10px;
+  padding: 9px; border-radius:8px;
+  border: 1px dashed var(--border); background: transparent;
+  color: var(--muted); font-family:'DM Sans',sans-serif; font-size:13px;
+  cursor:pointer; transition:all 0.2s; text-align:center;
 }
-.card-actions { display: flex; gap: 6px; margin-top: 10px; }
-.card-actions .btn { font-size: 12px; padding: 4px 10px; }
+.add-sub-btn:hover { border-color:var(--accent); color:var(--accent); background:rgba(200,169,110,0.04); }
 
 /* ── EMPTY ── */
-.empty-state {
-  text-align: center;
-  padding: 48px 24px;
-  color: var(--muted);
-}
-.empty-state .icon { font-size: 36px; margin-bottom: 10px; }
+.empty-state { text-align:center; padding:48px 24px; color:var(--muted); }
+.empty-state .icon { font-size:36px; margin-bottom:10px; }
 
 /* ── MODAL ── */
 .modal-overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.72);
-  z-index: 999;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(4px);
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.72); z-index:999;
+  align-items:center; justify-content:center;
+  backdrop-filter:blur(4px);
 }
-.modal-overlay.open { display: flex; }
-
+.modal-overlay.open { display:flex; }
 .modal {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  width: 540px;
-  max-width: 92vw;
-  max-height: 88vh;
-  overflow-y: auto;
-  padding: 28px;
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; width:520px; max-width:92vw;
+  max-height:88vh; overflow-y:auto; padding:28px;
 }
-.modal h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 20px;
-  margin-bottom: 20px;
-  color: var(--text);
+.modal h3 { font-family:'Playfair Display',serif; font-size:20px; margin-bottom:20px; color:var(--text); }
+.form-group { margin-bottom:14px; }
+.form-group label { display:block; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:5px; }
+.form-group input, .form-group textarea, .form-group select {
+  width:100%; background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif;
+  font-size:13px; padding:9px 12px; outline:none; transition:border-color 0.2s; resize:vertical;
 }
-.form-group { margin-bottom: 14px; }
-.form-group label {
-  display: block;
-  font-size: 11px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 5px;
-}
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  padding: 9px 12px;
-  outline: none;
-  transition: border-color 0.2s;
-  resize: vertical;
-}
-.form-group input:focus,
-.form-group textarea:focus { border-color: var(--accent); }
-.form-group textarea { min-height: 90px; }
-.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--accent); }
+.form-group textarea { min-height:90px; }
+.form-group select option { background:var(--surface2); }
+.modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:18px; }
 
-@media (max-width: 720px) {
-  #sidebar { display: none; }
-  #main { margin-left: 0; padding: 20px 16px 48px; }
-  .topbar-actions .btn:not(.primary) { display: none; }
-  #stats { flex-wrap: wrap; }
+@media(max-width:720px){
+  #sidebar{display:none;}
+  #main{margin-left:0;padding:20px 16px 48px;}
+  #stats{flex-wrap:wrap;}
 }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <header id="topbar">
   <span class="logo">✦ Prompt Library</span>
-  <div class="divider"></div>
-  <input id="search-box" type="text" placeholder="🔍  Cari prompt, tag, kategori..." oninput="filterPrompts(this.value)">
-  <div class="topbar-actions">
+  <div class="topbar-div"></div>
+  <input id="search-box" type="text" placeholder="🔍  Cari prompt..." oninput="doSearch(this.value)">
+  <div class="topbar-right">
     <button class="btn" onclick="exportData()">⬇ Export</button>
-    <button class="btn" onclick="document.getElementById('import-input').click()">⬆ Import</button>
-    <input id="import-input" type="file" accept=".json" style="display:none" onchange="importData(event)">
-    <button class="btn primary" onclick="openAddModal()">+ Tambah Prompt</button>
+    <button class="btn" onclick="document.getElementById('imp').click()">⬆ Import</button>
+    <input id="imp" type="file" accept=".json" style="display:none" onchange="importData(event)">
+    <button class="btn primary" onclick="openMasterModal()">+ Master Prompt</button>
   </div>
 </header>
 
 <div id="layout">
-  <!-- SIDEBAR -->
-  <nav id="sidebar">
-    <div class="sidebar-label">Kategori</div>
-    <div id="sidebar-cats"></div>
-  </nav>
-
-  <!-- MAIN -->
+  <nav id="sidebar"><div class="sb-label">Master Prompts</div><div id="sb-list"></div></nav>
   <main id="main">
     <div id="stats">
-      <div class="stat"><div class="num" id="stat-total">0</div><div class="label">Total Prompt</div></div>
-      <div class="stat"><div class="num" id="stat-cats">0</div><div class="label">Kategori</div></div>
-      <div class="stat"><div class="num" id="stat-month">0</div><div class="label">Bulan Ini</div></div>
+      <div class="stat"><div class="num" id="s-masters">0</div><div class="lbl">Master Prompt</div></div>
+      <div class="stat"><div class="num" id="s-subs">0</div><div class="lbl">Total Sub Prompt</div></div>
+      <div class="stat"><div class="num" id="s-month">0</div><div class="lbl">Ditambah Bulan Ini</div></div>
     </div>
     <div id="tab-bar"></div>
-    <div id="content-area"></div>
+    <div id="content"></div>
   </main>
 </div>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modal">
+<!-- MASTER MODAL -->
+<div class="modal-overlay" id="master-modal">
   <div class="modal">
-    <h3 id="modal-title">Tambah Prompt Baru</h3>
-    <div class="form-group">
-      <label>Judul Prompt *</label>
-      <input id="f-title" type="text" placeholder="Contoh: Email Profesional Generator">
-    </div>
-    <div class="form-group">
-      <label>Kategori *</label>
-      <input id="f-category" type="text" placeholder="Contoh: Writing, Coding, Business..." list="cat-list">
-      <datalist id="cat-list"></datalist>
-    </div>
-    <div class="form-group">
-      <label>Isi Prompt *</label>
-      <textarea id="f-prompt" placeholder="Tulis prompt kamu di sini..."></textarea>
-    </div>
-    <div class="form-group">
-      <label>Model / Platform</label>
-      <input id="f-model" type="text" placeholder="Contoh: Claude, GPT-4, Gemini...">
-    </div>
-    <div class="form-group">
-      <label>Tags (pisahkan koma)</label>
-      <input id="f-tags" type="text" placeholder="Contoh: kreatif, formal, analisis">
-    </div>
-    <div class="form-group">
-      <label>Catatan</label>
-      <textarea id="f-notes" placeholder="Tips atau konteks penggunaan..." style="min-height:60px"></textarea>
-    </div>
+    <h3 id="master-modal-title">Tambah Master Prompt</h3>
+    <div class="form-group"><label>Nama Master *</label><input id="m-name" type="text" placeholder="Contoh: Writing, Coding, Business..."></div>
+    <div class="form-group"><label>Icon (emoji)</label><input id="m-icon" type="text" placeholder="📁" maxlength="4"></div>
+    <div class="form-group"><label>Deskripsi</label><input id="m-desc" type="text" placeholder="Singkat tentang kategori ini..."></div>
     <div class="modal-actions">
-      <button class="btn" onclick="closeModal()">Batal</button>
-      <button class="btn primary" onclick="savePrompt()">Simpan</button>
+      <button class="btn" onclick="closeMasterModal()">Batal</button>
+      <button class="btn primary" onclick="saveMaster()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUB PROMPT MODAL -->
+<div class="modal-overlay" id="sub-modal">
+  <div class="modal">
+    <h3 id="sub-modal-title">Tambah Sub Prompt</h3>
+    <div class="form-group"><label>Master Prompt *</label>
+      <select id="s-master"></select>
+    </div>
+    <div class="form-group"><label>Judul Sub Prompt *</label><input id="s-title" type="text" placeholder="Contoh: Email Formal ke Klien"></div>
+    <div class="form-group"><label>Isi Prompt *</label><textarea id="s-prompt" placeholder="Tulis prompt kamu di sini..."></textarea></div>
+    <div class="form-group"><label>Model / Platform</label><input id="s-model" type="text" placeholder="Claude, GPT-4, Gemini..."></div>
+    <div class="form-group"><label>Tags (pisahkan koma)</label><input id="s-tags" type="text" placeholder="kreatif, formal, analisis"></div>
+    <div class="form-group"><label>Catatan</label><textarea id="s-notes" placeholder="Tips atau konteks..." style="min-height:60px"></textarea></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeSubModal()">Batal</button>
+      <button class="btn primary" onclick="saveSub()">Simpan</button>
     </div>
   </div>
 </div>
 
 <script>
-const STORAGE_KEY = 'prompt_library_v1';
-let editingId = null;
+const KEY = 'pl_v2';
 let activeTab = 'all';
+let editMasterId = null;
+let editSubId = null;
+let subTargetMasterId = null;
 
-function loadData() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch { return []; }
+// ── DATA ─────────────────────────────────────────────────
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || defaultData(); }
+  catch { return defaultData(); }
 }
-function saveData(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+function save(d) { localStorage.setItem(KEY, JSON.stringify(d)); }
 
-const SAMPLES = [
-  { id:'s1', title:'Summarize Article', category:'Reading & Research', prompt:'Please summarize the following article in 3-5 bullet points, highlighting the most important insights. Then provide a one-sentence takeaway.\n\nArticle:\n[PASTE ARTICLE HERE]', model:'Claude', tags:['ringkasan','riset'], notes:'Bagus untuk artikel panjang atau laporan.', date: new Date().toISOString() },
-  { id:'s2', title:'Email Profesional', category:'Writing', prompt:'Tulis email profesional dengan nada [formal/santai] kepada [NAMA/JABATAN] tentang:\n\n[DESKRIPSI TOPIK]\n\nPastikan:\n- Pembukaan sopan\n- Isi jelas dan padat\n- Tindakan yang spesifik\n- Penutup profesional', model:'Claude', tags:['email','bisnis','formal'], notes:'Ganti bagian dalam kurung sesuai kebutuhan.', date: new Date().toISOString() },
-  { id:'s3', title:'Debug Code', category:'Coding', prompt:'Tolong debug kode berikut. Identifikasi:\n1. Bug atau error yang ada\n2. Penjelasan mengapa terjadi\n3. Kode yang sudah diperbaiki\n4. Saran optimisasi jika ada\n\nBahasa: [BAHASA PEMROGRAMAN]\n\n```\n[PASTE KODE DI SINI]\n```\n\nError message:\n[ERROR MESSAGE]', model:'Claude', tags:['debug','programming'], notes:'Sertakan error message untuk hasil akurat.', date: new Date().toISOString() },
-  { id:'s4', title:'Brainstorm Ide', category:'Creativity', prompt:'Bantu aku brainstorm 10 ide kreatif untuk [TOPIK/PROYEK].\n\nKonteks:\n- Target audience: [SIAPA]\n- Tujuan: [APA]\n- Batasan: [JIKA ADA]\n\nUntuk setiap ide berikan:\n- Nama singkat\n- Deskripsi 1-2 kalimat\n- Potensi tantangan', model:'Claude', tags:['brainstorm','ide','kreatif'], notes:'Tambahkan referensi untuk ide lebih terarah.', date: new Date().toISOString() },
-  { id:'s5', title:'Analisis Data', category:'Analysis', prompt:'Analisis data berikut dan berikan:\n1. Tren utama yang terlihat\n2. Anomali atau outlier\n3. Insight yang actionable\n4. Rekomendasi langkah selanjutnya\n\nData:\n[PASTE DATA DI SINI]\n\nKonteks bisnis:\n[JELASKAN KONTEKS]', model:'Claude', tags:['data','analisis','bisnis'], notes:'Sertakan konteks bisnis untuk rekomendasi yang relevan.', date: new Date().toISOString() },
-  { id:'s6', title:'Proposal Bisnis', category:'Business', prompt:'Buat proposal bisnis singkat untuk:\n\nProduk/Layanan: [NAMA]\nTarget Market: [SIAPA]\nProblem yang diselesaikan: [APA]\nAnggaran estimasi: [NOMINAL]\n\nStruktur:\n1. Executive Summary\n2. Problem Statement\n3. Proposed Solution\n4. Timeline & Budget\n5. Expected Outcome', model:'Claude', tags:['proposal','bisnis','formal'], notes:'Cocok untuk pitch deck atau dokumen formal.', date: new Date().toISOString() },
-];
-
-const CAT_ICONS = {
-  'Writing':'✍️','Coding':'💻','Reading & Research':'📖',
-  'Creativity':'🎨','Business':'💼','Analysis':'📊',
-  'Marketing':'📣','Design':'🖌️','Learning':'🎓','Personal':'🌿'
-};
-function catIcon(c) { return CAT_ICONS[c] || '📁'; }
-
-function initData() { if (!loadData().length) saveData(SAMPLES); }
-
-function groupByCategory(data) {
-  return data.reduce((acc, p) => {
-    (acc[p.category] = acc[p.category] || []).push(p);
-    return acc;
-  }, {});
+function defaultData() {
+  return {
+    masters: [
+      { id:'m1', name:'Writing', icon:'✍️', desc:'Prompt untuk menulis konten, email, artikel' },
+      { id:'m2', name:'Coding', icon:'💻', desc:'Prompt untuk programming dan debugging' },
+      { id:'m3', name:'Business', icon:'💼', desc:'Prompt untuk analisis dan keperluan bisnis' },
+    ],
+    subs: [
+      { id:'sub1', masterId:'m1', title:'Email Profesional', prompt:'Tulis email profesional dengan nada [formal/santai] kepada [NAMA] tentang:\n\n[TOPIK]\n\nPastikan:\n- Pembukaan sopan\n- Isi jelas dan padat\n- Permintaan spesifik\n- Penutup profesional', model:'Claude', tags:['email','formal'], notes:'Ganti bagian dalam kurung.', date:new Date().toISOString() },
+      { id:'sub2', masterId:'m1', title:'Artikel Blog', prompt:'Tulis artikel blog dengan struktur:\n- Headline yang menarik\n- Hook di paragraf pertama\n- 3-5 poin utama dengan contoh\n- Call to action\n\nTopik: [TOPIK]\nTone: [formal/casual]\nPanjang: [jumlah kata]', model:'Claude', tags:['blog','konten'], notes:'Cocok untuk blog dan Medium.', date:new Date().toISOString() },
+      { id:'sub3', masterId:'m2', title:'Debug Code', prompt:'Debug kode berikut:\n1. Identifikasi bug\n2. Penjelasan penyebab\n3. Kode yang diperbaiki\n4. Saran optimisasi\n\nBahasa: [BAHASA]\n\n```\n[KODE]\n```\n\nError: [ERROR MESSAGE]', model:'Claude', tags:['debug'], notes:'Sertakan error message.', date:new Date().toISOString() },
+      { id:'sub4', masterId:'m2', title:'Code Review', prompt:'Lakukan code review pada kode berikut. Berikan feedback tentang:\n- Readability & naming\n- Performance issues\n- Security concerns\n- Best practices\n- Refactoring suggestions\n\n```\n[KODE]\n```', model:'Claude', tags:['review','kualitas'], notes:'', date:new Date().toISOString() },
+      { id:'sub5', masterId:'m3', title:'Analisis Kompetitor', prompt:'Analisis kompetitor untuk bisnis saya:\n\nBisnis saya: [DESKRIPSI]\nKompetitor: [NAMA KOMPETITOR]\n\nAnalisis:\n1. Strengths & Weaknesses mereka\n2. Strategi yang mereka pakai\n3. Gap yang bisa saya manfaatkan\n4. Rekomendasi diferensiasi', model:'Claude', tags:['analisis','strategi'], notes:'', date:new Date().toISOString() },
+      { id:'sub6', masterId:'m3', title:'Proposal Bisnis', prompt:'Buat proposal bisnis untuk:\n\nProduk/Layanan: [NAMA]\nTarget Market: [SIAPA]\nProblem: [APA]\nBudget: [NOMINAL]\n\nStruktur:\n1. Executive Summary\n2. Problem Statement\n3. Solution\n4. Timeline & Budget\n5. Expected Outcome', model:'Claude', tags:['proposal','formal'], notes:'Cocok untuk pitch deck.', date:new Date().toISOString() },
+    ]
+  };
 }
 
 // ── RENDER ───────────────────────────────────────────────
-function render(query, tab) {
-  query = query !== undefined ? query : document.getElementById('search-box').value;
-  tab = tab !== undefined ? tab : activeTab;
-  activeTab = tab;
+function render(q) {
+  q = q !== undefined ? q : (document.getElementById('search-box').value || '');
+  const ql = q.toLowerCase();
+  const { masters, subs } = load();
 
-  const data = loadData();
-  const cats = groupByCategory(data);
-  const q = query.toLowerCase();
-
-  // Stats
+  // stats
   const now = new Date();
-  const thisMonth = data.filter(p => {
-    const d = new Date(p.date);
-    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-  });
-  document.getElementById('stat-total').textContent = data.length;
-  document.getElementById('stat-cats').textContent = Object.keys(cats).length;
-  document.getElementById('stat-month').textContent = thisMonth.length;
+  const thisMonth = subs.filter(s => { const d = new Date(s.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+  document.getElementById('s-masters').textContent = masters.length;
+  document.getElementById('s-subs').textContent = subs.length;
+  document.getElementById('s-month').textContent = thisMonth.length;
 
-  // Sidebar
-  const sidebarEl = document.getElementById('sidebar-cats');
-  const total = data.length;
-  let sbHtml = `<div class="sidebar-cat ${tab==='all'?'active':''}" onclick="switchTab('all')">🗂 Semua<span class="cat-badge">${total}</span></div>`;
-  Object.entries(cats).forEach(([cat, arr]) => {
-    sbHtml += `<div class="sidebar-cat ${tab===cat?'active':''}" onclick="switchTab(${JSON.stringify(cat)})">${catIcon(cat)} ${cat}<span class="cat-badge">${arr.length}</span></div>`;
+  // sidebar
+  let sbHtml = `<div class="sb-item ${activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua<span class="sb-badge">${subs.length}</span></div>`;
+  masters.forEach(m => {
+    const cnt = subs.filter(s=>s.masterId===m.id).length;
+    sbHtml += `<div class="sb-item ${activeTab===m.id?'active':''}" onclick="setTab('${m.id}')">${m.icon} ${m.name}<span class="sb-badge">${cnt}</span></div>`;
   });
-  sidebarEl.innerHTML = sbHtml;
+  document.getElementById('sb-list').innerHTML = sbHtml;
 
-  // Tabs
-  const tabBar = document.getElementById('tab-bar');
-  let tabHtml = `<button class="tab-btn ${tab==='all'?'active':''}" onclick="switchTab('all')">🗂 Semua <span class="tab-count">${total}</span></button>`;
-  Object.entries(cats).forEach(([cat, arr]) => {
-    const cnt = arr.filter(p => matchesQuery(p, q)).length;
-    if (q && cnt === 0) return;
-    tabHtml += `<button class="tab-btn ${tab===cat?'active':''}" onclick="switchTab(${JSON.stringify(cat)})">${catIcon(cat)} ${cat} <span class="tab-count">${q ? cnt : arr.length}</span></button>`;
+  // tabs
+  let tabHtml = `<button class="tab ${activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua <span class="tc">${subs.length}</span></button>`;
+  masters.forEach(m => {
+    const cnt = subs.filter(s => s.masterId===m.id && matchSub(s,ql)).length;
+    if (ql && cnt===0) return;
+    tabHtml += `<button class="tab ${activeTab===m.id?'active':''}" onclick="setTab('${m.id}')">${m.icon} ${m.name} <span class="tc">${ql?cnt:subs.filter(s=>s.masterId===m.id).length}</span></button>`;
   });
-  tabBar.innerHTML = tabHtml;
+  document.getElementById('tab-bar').innerHTML = tabHtml;
 
-  // Content
-  const content = document.getElementById('content-area');
+  // content
+  const content = document.getElementById('content');
   content.innerHTML = '';
 
-  const entries = tab === 'all'
-    ? Object.entries(cats)
-    : Object.entries(cats).filter(([c]) => c === tab);
+  const visibleMasters = activeTab === 'all' ? masters : masters.filter(m => m.id === activeTab);
+  let any = false;
 
-  let anyVisible = false;
-  entries.forEach(([cat, arr]) => {
-    const filtered = arr.filter(p => matchesQuery(p, q));
-    if (!filtered.length) return;
-    anyVisible = true;
-    content.appendChild(buildAccordion(cat, filtered));
+  visibleMasters.forEach(m => {
+    const mSubs = subs.filter(s => s.masterId===m.id && matchSub(s,ql));
+    if (ql && mSubs.length===0) return;
+    any = true;
+    content.appendChild(buildMasterBlock(m, ql ? mSubs : subs.filter(s=>s.masterId===m.id)));
   });
 
-  if (!anyVisible) {
-    content.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>Tidak ada prompt yang cocok.</p></div>`;
-  }
+  if (!any) content.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>Tidak ada prompt yang cocok.</p></div>`;
 
-  // datalist
-  document.getElementById('cat-list').innerHTML = Object.keys(cats).map(c=>`<option value="${c}">`).join('');
+  // update sub master select
+  updateMasterSelect(masters);
 }
 
-function buildAccordion(cat, prompts) {
-  const slug = slugify(cat);
+function buildMasterBlock(m, mSubs) {
   const block = document.createElement('div');
-  block.className = 'acc-block open';
-  block.id = 'acc-' + slug;
+  block.className = 'master-block open';
+  block.id = 'mb-' + m.id;
   block.innerHTML = `
-    <div class="acc-header" onclick="toggleAcc('${slug}')">
-      <span class="acc-chevron">▶</span>
-      <span class="acc-emoji">${catIcon(cat)}</span>
-      <span class="acc-title">${cat}</span>
-      <span class="acc-count">${prompts.length} prompt</span>
-      <button class="acc-toggle-btn" onclick="toggleAllCards(event,'${slug}')">Tutup Semua</button>
+    <div class="master-header" onclick="toggleMaster('${m.id}')">
+      <span class="master-chevron">▶</span>
+      <span class="master-icon">${m.icon}</span>
+      <div style="flex:1">
+        <div class="master-title">${m.name}</div>
+        ${m.desc ? `<div class="master-desc">${m.desc}</div>` : ''}
+      </div>
+      <span class="master-count">${mSubs.length} prompt</span>
+      <div class="master-actions" onclick="event.stopPropagation()">
+        <button class="btn sm" onclick="openEditMaster('${m.id}')">✏️</button>
+        <button class="btn sm danger" onclick="deleteMaster('${m.id}')">🗑</button>
+      </div>
     </div>
-    <div class="acc-body" id="acc-body-${slug}"></div>
+    <div class="master-body" id="mb-body-${m.id}"></div>
   `;
-  const body = block.querySelector('.acc-body');
-  prompts.forEach(p => body.appendChild(buildCard(p)));
+  const body = block.querySelector('.master-body');
+  if (mSubs.length === 0) {
+    body.innerHTML = `<div style="padding:12px 4px;color:var(--muted);font-size:13px;font-style:italic">Belum ada sub prompt. Tambah yuk!</div>`;
+  } else {
+    mSubs.forEach(s => body.appendChild(buildSubCard(s)));
+  }
+  // add sub btn
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-sub-btn';
+  addBtn.textContent = '+ Tambah Sub Prompt';
+  addBtn.onclick = () => openSubModal(m.id);
+  body.appendChild(addBtn);
   return block;
 }
 
-function buildCard(p) {
+function buildSubCard(s) {
   const card = document.createElement('div');
-  card.className = 'prompt-card open'; // open by default
-  card.id = 'prompt-' + p.id;
-
-  const tags = (p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
-  const modelTag = p.model ? `<span class="tag model">${p.model}</span>` : '';
-  const dateStr = p.date ? new Date(p.date).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) : '';
+  card.className = 'sub-card';
+  card.id = 'sc-' + s.id;
+  const tags = (s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+  const modelTag = s.model ? `<span class="tag model">${s.model}</span>` : '';
+  const dateStr = s.date ? new Date(s.date).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) : '';
   const dateTag = dateStr ? `<span class="tag date">${dateStr}</span>` : '';
-
   card.innerHTML = `
-    <div class="card-header" onclick="toggleCard('${p.id}')">
-      <span class="card-chevron">▶</span>
-      <div class="card-title-area">
-        <div class="card-title">${p.title}</div>
-        <div class="card-meta">${modelTag}${tags}${dateTag}</div>
+    <div class="sub-header" onclick="toggleSub('${s.id}')">
+      <span class="sub-chevron">▶</span>
+      <div class="sub-title-area">
+        <div class="sub-title">${s.title}</div>
+        <div class="sub-meta">${modelTag}${tags}${dateTag}</div>
       </div>
     </div>
-    <div class="card-body">
-      <div class="prompt-text" id="pt-${p.id}">${escHtml(p.prompt)}<button class="copy-btn" onclick="copyPrompt(event,'pt-${p.id}')">Salin</button></div>
-      ${p.notes ? `<div class="card-notes">📌 ${escHtml(p.notes)}</div>` : ''}
-      <div class="card-actions">
-        <button class="btn" onclick="editPrompt('${p.id}')">✏️ Edit</button>
-        <button class="btn" style="color:#e07070;border-color:rgba(224,112,112,0.3)" onclick="deletePrompt('${p.id}')">🗑 Hapus</button>
+    <div class="sub-body">
+      <div class="prompt-text" id="pt-${s.id}">${escH(s.prompt)}<button class="copy-btn" onclick="doCopy(event,'pt-${s.id}')">Salin</button></div>
+      ${s.notes ? `<div class="sub-notes">📌 ${escH(s.notes)}</div>` : ''}
+      <div class="sub-actions">
+        <button class="btn sm" onclick="openEditSub('${s.id}')">✏️ Edit</button>
+        <button class="btn sm danger" onclick="deleteSub('${s.id}')">🗑 Hapus</button>
       </div>
     </div>
   `;
   return card;
 }
 
-// ── INTERACTIONS ─────────────────────────────────────────
-function switchTab(cat) { render(undefined, cat); }
+// ── TOGGLE ────────────────────────────────────────────────
+function toggleMaster(id) { document.getElementById('mb-'+id).classList.toggle('open'); }
+function toggleSub(id) { document.getElementById('sc-'+id).classList.toggle('open'); }
+function setTab(id) { activeTab = id; render(); }
+function doSearch(q) { render(q); }
 
-function toggleAcc(slug) {
-  document.getElementById('acc-' + slug).classList.toggle('open');
-}
-
-function toggleAllCards(e, slug) {
-  e.stopPropagation();
-  const body = document.getElementById('acc-body-' + slug);
-  const cards = body.querySelectorAll('.prompt-card');
-  const btn = e.target;
-  const anyOpen = [...cards].some(c => c.classList.contains('open'));
-  cards.forEach(c => anyOpen ? c.classList.remove('open') : c.classList.add('open'));
-  btn.textContent = anyOpen ? 'Buka Semua' : 'Tutup Semua';
-}
-
-function toggleCard(id) {
-  document.getElementById('prompt-' + id).classList.toggle('open');
-}
-
-function copyPrompt(e, id) {
+// ── COPY ─────────────────────────────────────────────────
+function doCopy(e, id) {
   e.stopPropagation();
   const text = document.getElementById(id).innerText.replace('Salin','').trim();
   navigator.clipboard.writeText(text).then(() => {
-    const btn = e.target;
-    btn.textContent = '✓ Disalin';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Salin'; btn.classList.remove('copied'); }, 2000);
+    const b = e.target; b.textContent='✓ Disalin'; b.classList.add('copied');
+    setTimeout(()=>{ b.textContent='Salin'; b.classList.remove('copied'); },2000);
   });
 }
 
-function filterPrompts(q) { render(q); }
-
-function matchesQuery(p, q) {
-  if (!q) return true;
-  return (p.title+p.category+p.prompt+(p.tags||[]).join(' ')+(p.notes||'')).toLowerCase().includes(q);
+// ── MASTER MODAL ──────────────────────────────────────────
+function openMasterModal() {
+  editMasterId = null;
+  document.getElementById('master-modal-title').textContent = 'Tambah Master Prompt';
+  document.getElementById('m-name').value = '';
+  document.getElementById('m-icon').value = '';
+  document.getElementById('m-desc').value = '';
+  document.getElementById('master-modal').classList.add('open');
 }
-
-// ── MODAL ─────────────────────────────────────────────────
-function openAddModal() {
-  editingId = null;
-  document.getElementById('modal-title').textContent = 'Tambah Prompt Baru';
-  ['f-title','f-category','f-prompt','f-model','f-tags','f-notes'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('modal').classList.add('open');
+function openEditMaster(id) {
+  const { masters } = load();
+  const m = masters.find(x=>x.id===id); if (!m) return;
+  editMasterId = id;
+  document.getElementById('master-modal-title').textContent = 'Edit Master Prompt';
+  document.getElementById('m-name').value = m.name;
+  document.getElementById('m-icon').value = m.icon;
+  document.getElementById('m-desc').value = m.desc || '';
+  document.getElementById('master-modal').classList.add('open');
 }
-
-function editPrompt(id) {
-  const p = loadData().find(x => x.id === id);
-  if (!p) return;
-  editingId = id;
-  document.getElementById('modal-title').textContent = 'Edit Prompt';
-  document.getElementById('f-title').value = p.title;
-  document.getElementById('f-category').value = p.category;
-  document.getElementById('f-prompt').value = p.prompt;
-  document.getElementById('f-model').value = p.model || '';
-  document.getElementById('f-tags').value = (p.tags||[]).join(', ');
-  document.getElementById('f-notes').value = p.notes || '';
-  document.getElementById('modal').classList.add('open');
-}
-
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-  editingId = null;
-}
-
-function savePrompt() {
-  const title = document.getElementById('f-title').value.trim();
-  const category = document.getElementById('f-category').value.trim();
-  const prompt = document.getElementById('f-prompt').value.trim();
-  if (!title || !category || !prompt) { alert('Judul, Kategori, dan Prompt wajib diisi!'); return; }
-  const data = loadData();
-  const tags = document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const entry = { title, category, prompt, model: document.getElementById('f-model').value.trim(), tags, notes: document.getElementById('f-notes').value.trim() };
-  if (editingId) {
-    const idx = data.findIndex(x => x.id === editingId);
-    if (idx !== -1) data[idx] = { ...data[idx], ...entry };
+function closeMasterModal() { document.getElementById('master-modal').classList.remove('open'); editMasterId=null; }
+function saveMaster() {
+  const name = document.getElementById('m-name').value.trim();
+  if (!name) { alert('Nama master wajib diisi!'); return; }
+  const d = load();
+  const entry = { name, icon: document.getElementById('m-icon').value.trim() || '📁', desc: document.getElementById('m-desc').value.trim() };
+  if (editMasterId) {
+    const idx = d.masters.findIndex(x=>x.id===editMasterId);
+    if (idx!==-1) d.masters[idx] = { ...d.masters[idx], ...entry };
   } else {
-    data.push({ id: 'p'+Date.now(), ...entry, date: new Date().toISOString() });
+    d.masters.push({ id:'m'+Date.now(), ...entry });
   }
-  saveData(data);
-  closeModal();
-  render(undefined, category);
+  save(d); closeMasterModal(); render();
 }
-
-function deletePrompt(id) {
-  if (!confirm('Hapus prompt ini?')) return;
-  saveData(loadData().filter(x => x.id !== id));
+function deleteMaster(id) {
+  if (!confirm('Hapus master prompt ini beserta semua sub prompt di dalamnya?')) return;
+  const d = load();
+  d.masters = d.masters.filter(x=>x.id!==id);
+  d.subs = d.subs.filter(x=>x.masterId!==id);
+  save(d);
+  if (activeTab===id) activeTab='all';
   render();
 }
 
-function exportData() {
-  const blob = new Blob([JSON.stringify(loadData(), null, 2)], { type: 'application/json' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-  a.download = 'prompt-library-' + new Date().toISOString().slice(0,10) + '.json'; a.click();
+// ── SUB MODAL ─────────────────────────────────────────────
+function updateMasterSelect(masters) {
+  const sel = document.getElementById('s-master');
+  sel.innerHTML = masters.map(m=>`<option value="${m.id}">${m.icon} ${m.name}</option>`).join('');
+}
+function openSubModal(masterId) {
+  editSubId = null; subTargetMasterId = masterId || null;
+  document.getElementById('sub-modal-title').textContent = 'Tambah Sub Prompt';
+  ['s-title','s-prompt','s-model','s-tags','s-notes'].forEach(id=>document.getElementById(id).value='');
+  if (masterId) document.getElementById('s-master').value = masterId;
+  document.getElementById('sub-modal').classList.add('open');
+}
+function openEditSub(id) {
+  const { subs } = load();
+  const s = subs.find(x=>x.id===id); if (!s) return;
+  editSubId = id;
+  document.getElementById('sub-modal-title').textContent = 'Edit Sub Prompt';
+  document.getElementById('s-master').value = s.masterId;
+  document.getElementById('s-title').value = s.title;
+  document.getElementById('s-prompt').value = s.prompt;
+  document.getElementById('s-model').value = s.model||'';
+  document.getElementById('s-tags').value = (s.tags||[]).join(', ');
+  document.getElementById('s-notes').value = s.notes||'';
+  document.getElementById('sub-modal').classList.add('open');
+}
+function closeSubModal() { document.getElementById('sub-modal').classList.remove('open'); editSubId=null; subTargetMasterId=null; }
+function saveSub() {
+  const masterId = document.getElementById('s-master').value;
+  const title = document.getElementById('s-title').value.trim();
+  const prompt = document.getElementById('s-prompt').value.trim();
+  if (!title||!prompt) { alert('Judul dan Prompt wajib diisi!'); return; }
+  const d = load();
+  const tags = document.getElementById('s-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const entry = { masterId, title, prompt, model:document.getElementById('s-model').value.trim(), tags, notes:document.getElementById('s-notes').value.trim() };
+  if (editSubId) {
+    const idx = d.subs.findIndex(x=>x.id===editSubId);
+    if (idx!==-1) d.subs[idx] = { ...d.subs[idx], ...entry };
+  } else {
+    d.subs.push({ id:'s'+Date.now(), ...entry, date:new Date().toISOString() });
+  }
+  save(d); closeSubModal(); render();
+}
+function deleteSub(id) {
+  if (!confirm('Hapus sub prompt ini?')) return;
+  const d = load(); d.subs = d.subs.filter(x=>x.id!==id); save(d); render();
 }
 
+// ── EXPORT / IMPORT ──────────────────────────────────────
+function exportData() {
+  const blob = new Blob([JSON.stringify(load(),null,2)],{type:'application/json'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='prompt-library-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+}
 function importData(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
+  const file = e.target.files[0]; if(!file) return;
+  const r = new FileReader();
+  r.onload = ev => {
     try {
       const imp = JSON.parse(ev.target.result);
-      if (!Array.isArray(imp)) throw new Error();
-      const existing = loadData();
-      imp.forEach(p => { if (!existing.find(x=>x.id===p.id)) existing.push(p); });
-      saveData(existing);
-      render(); alert(`✓ Berhasil import ${imp.length} prompt!`);
+      if (!imp.masters||!imp.subs) throw new Error();
+      const d = load();
+      imp.masters.forEach(m=>{ if(!d.masters.find(x=>x.id===m.id)) d.masters.push(m); });
+      imp.subs.forEach(s=>{ if(!d.subs.find(x=>x.id===s.id)) d.subs.push(s); });
+      save(d); render(); alert(`✓ Import berhasil!`);
     } catch { alert('File tidak valid.'); }
   };
-  reader.readAsText(file); e.target.value = '';
+  r.readAsText(file); e.target.value='';
 }
 
-function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function slugify(s) { return s.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,''); }
+// ── HELPERS ──────────────────────────────────────────────
+function matchSub(s, q) {
+  if (!q) return true;
+  return (s.title+s.prompt+(s.tags||[]).join(' ')+(s.notes||'')).toLowerCase().includes(q);
+}
+function escH(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
+// close modal on overlay click
+['master-modal','sub-modal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
 });
 
-initData();
+// ── INIT ─────────────────────────────────────────────────
+if (!localStorage.getItem(KEY)) save(defaultData());
 render();
 </script>
 </body>
