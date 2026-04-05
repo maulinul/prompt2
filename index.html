@@ -7,168 +7,180 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0e0e10; --surface: #16161a; --surface2: #1e1e24;
-  --border: #2a2a35; --accent: #c8a96e; --accent2: #7c6aff;
-  --green: #6eb8a9; --text: #e8e6e1; --muted: #888892;
-  --red: #e07070; --sidebar-w: 260px;
+  --bg:#0e0e10; --surface:#16161a; --surface2:#1e1e24;
+  --border:#2a2a35; --accent:#c8a96e; --accent2:#7c6aff;
+  --green:#6eb8a9; --text:#e8e6e1; --muted:#888892;
+  --red:#e07070; --sidebar-w:260px;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; line-height:1.6; min-height:100vh; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
 
 /* TOPBAR */
-#topbar { position:fixed; top:0; left:0; right:0; height:56px; background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 24px; gap:14px; z-index:200; }
-.logo { font-family:'Playfair Display',serif; font-size:18px; color:var(--accent); font-weight:700; white-space:nowrap; }
-.topbar-div { width:1px; height:20px; background:var(--border); flex-shrink:0; }
-#search-box { flex:1; max-width:280px; padding:7px 14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:13px; outline:none; transition:border-color 0.2s; }
-#search-box:focus { border-color:var(--accent); }
-#search-box::placeholder { color:var(--muted); }
-.topbar-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
+#topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:14px;z-index:200;}
+.logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--accent);font-weight:700;white-space:nowrap;}
+.topbar-div{width:1px;height:20px;background:var(--border);flex-shrink:0;}
+#search-box{flex:1;max-width:280px;padding:7px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;}
+#search-box:focus{border-color:var(--accent);}
+#search-box::placeholder{color:var(--muted);}
+.topbar-right{margin-left:auto;display:flex;gap:8px;align-items:center;}
 
 /* SYNC STATUS */
-#sync-status { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:5px; white-space:nowrap; }
-#sync-dot { width:7px; height:7px; border-radius:50%; background:var(--muted); flex-shrink:0; }
-#sync-dot.ok { background:var(--green); }
-#sync-dot.err { background:var(--red); }
-#sync-dot.loading { background:var(--accent); animation:pulse 1s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+#sync-status{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:5px;white-space:nowrap;}
+#sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+#sync-dot.ok{background:var(--green);}
+#sync-dot.err{background:var(--red);}
+#sync-dot.loading{background:var(--accent);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* TOAST */
+#toast{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.toast-item{padding:10px 16px;border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;opacity:0;transform:translateY(8px);transition:all 0.25s;pointer-events:none;border:1px solid;}
+.toast-item.show{opacity:1;transform:translateY(0);}
+.toast-item.success{background:#0d1f1a;border-color:rgba(110,184,169,0.4);color:var(--green);}
+.toast-item.error{background:#1f0d0d;border-color:rgba(224,112,112,0.4);color:var(--red);}
+.toast-item.info{background:var(--surface);border-color:var(--border);color:var(--text);}
 
 /* BUTTONS */
-.btn { padding:7px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surface2); color:var(--text); font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
-.btn:hover { border-color:var(--accent); color:var(--accent); }
-.btn.primary { background:var(--accent); color:#0e0e10; border-color:var(--accent); font-weight:500; }
-.btn.primary:hover { opacity:0.85; color:#0e0e10; }
-.btn.danger { color:var(--red); border-color:rgba(224,112,112,0.3); }
-.btn.danger:hover { border-color:var(--red); background:rgba(224,112,112,0.08); color:var(--red); }
-.btn.sm { font-size:12px; padding:4px 10px; }
+.btn{padding:7px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn:disabled{opacity:0.45;cursor:not-allowed;}
+.btn.primary{background:var(--accent);color:#0e0e10;border-color:var(--accent);font-weight:500;}
+.btn.primary:hover{opacity:0.85;color:#0e0e10;}
+.btn.danger{color:var(--red);border-color:rgba(224,112,112,0.3);}
+.btn.danger:hover{border-color:var(--red);background:rgba(224,112,112,0.08);color:var(--red);}
+.btn.sm{font-size:12px;padding:4px 10px;}
 
 /* LAYOUT */
-#layout { display:flex; margin-top:56px; min-height:calc(100vh - 56px); }
+#layout{display:flex;margin-top:56px;min-height:calc(100vh - 56px);}
 
 /* SIDEBAR */
-#sidebar { width:var(--sidebar-w); background:var(--surface); border-right:1px solid var(--border); position:fixed; top:56px; left:0; bottom:0; overflow-y:auto; padding:16px 0 32px; z-index:100; }
-#sidebar::-webkit-scrollbar { width:3px; }
-#sidebar::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
-.sb-label { padding:12px 18px 6px; font-size:10px; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); opacity:0.6; }
-.sb-item { display:flex; align-items:center; gap:8px; padding:9px 18px; font-size:13px; color:var(--muted); cursor:pointer; transition:all 0.15s; border-left:2px solid transparent; user-select:none; }
-.sb-item:hover { color:var(--text); background:var(--surface2); }
-.sb-item.active { color:var(--accent); border-left-color:var(--accent); background:rgba(200,169,110,0.06); }
-.sb-badge { margin-left:auto; font-size:10px; background:var(--surface2); border:1px solid var(--border); padding:1px 6px; border-radius:99px; color:var(--muted); }
-.sb-item.active .sb-badge { border-color:rgba(200,169,110,0.3); color:var(--accent); background:rgba(200,169,110,0.08); }
+#sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;padding:16px 0 32px;z-index:100;}
+#sidebar::-webkit-scrollbar{width:3px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+.sb-label{padding:12px 18px 6px;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);opacity:0.6;}
+.sb-item{display:flex;align-items:center;gap:8px;padding:9px 18px;font-size:13px;color:var(--muted);cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;user-select:none;}
+.sb-item:hover{color:var(--text);background:var(--surface2);}
+.sb-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(200,169,110,0.06);}
+.sb-badge{margin-left:auto;font-size:10px;background:var(--surface2);border:1px solid var(--border);padding:1px 6px;border-radius:99px;color:var(--muted);}
+.sb-item.active .sb-badge{border-color:rgba(200,169,110,0.3);color:var(--accent);background:rgba(200,169,110,0.08);}
 
 /* MAIN */
-#main { margin-left:var(--sidebar-w); flex:1; padding:28px 40px 60px; }
+#main{margin-left:var(--sidebar-w);flex:1;padding:28px 40px 60px;}
 
 /* STATS */
-#stats { display:flex; gap:14px; margin-bottom:24px; }
-.stat { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 18px; flex:1; }
-.stat .num { font-family:'Playfair Display',serif; font-size:24px; color:var(--accent); line-height:1.1; }
-.stat .lbl { font-size:11px; color:var(--muted); margin-top:2px; }
+#stats{display:flex;gap:14px;margin-bottom:24px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 18px;flex:1;}
+.stat .num{font-family:'Playfair Display',serif;font-size:24px;color:var(--accent);line-height:1.1;}
+.stat .lbl{font-size:11px;color:var(--muted);margin-top:2px;}
 
 /* TABS */
-#tab-bar { display:flex; gap:6px; margin-bottom:22px; flex-wrap:wrap; }
-.tab { display:flex; align-items:center; gap:6px; padding:8px 16px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--muted); font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
-.tab:hover { color:var(--text); border-color:#3a3a48; background:var(--surface2); }
-.tab.active { background:var(--accent); color:#0e0e10; border-color:var(--accent); font-weight:500; }
-.tab .tc { font-size:11px; background:rgba(0,0,0,0.15); padding:1px 6px; border-radius:99px; }
+#tab-bar{display:flex;gap:6px;margin-bottom:22px;flex-wrap:wrap;}
+.tab{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.tab:hover{color:var(--text);border-color:#3a3a48;background:var(--surface2);}
+.tab.active{background:var(--accent);color:#0e0e10;border-color:var(--accent);font-weight:500;}
+.tab .tc{font-size:11px;background:rgba(0,0,0,0.15);padding:1px 6px;border-radius:99px;}
 
 /* MASTER BLOCK */
-.master-block { background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-bottom:14px; overflow:hidden; }
-.master-header { display:flex; align-items:center; gap:12px; padding:16px 20px; cursor:pointer; user-select:none; transition:background 0.15s; }
-.master-header:hover { background:rgba(255,255,255,0.025); }
-.master-chevron { color:var(--accent); font-size:11px; transition:transform 0.25s; flex-shrink:0; }
-.master-block.open .master-chevron { transform:rotate(90deg); }
-.master-icon { font-size:20px; }
-.master-title { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:var(--text); flex:1; }
-.master-desc { font-size:12px; color:var(--muted); margin-top:2px; }
-.master-count { font-size:11px; color:var(--muted); background:var(--surface2); border:1px solid var(--border); padding:2px 8px; border-radius:99px; }
-.master-actions { display:flex; gap:6px; margin-left:8px; }
-.master-body { display:none; padding:0 16px 16px; }
-.master-block.open .master-body { display:block; }
+.master-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden;}
+.master-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;transition:background 0.15s;}
+.master-header:hover{background:rgba(255,255,255,0.025);}
+.master-chevron{color:var(--accent);font-size:11px;transition:transform 0.25s;flex-shrink:0;}
+.master-block.open .master-chevron{transform:rotate(90deg);}
+.master-icon{font-size:20px;}
+.master-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--text);flex:1;}
+.master-desc{font-size:12px;color:var(--muted);margin-top:2px;}
+.master-count{font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:99px;}
+.master-actions{display:flex;gap:6px;margin-left:8px;}
+.master-body{display:none;padding:0 16px 16px;}
+.master-block.open .master-body{display:block;}
 
 /* SUB CARD */
-.sub-card { border:1px solid var(--border); border-radius:10px; margin-bottom:8px; overflow:hidden; background:var(--bg); transition:border-color 0.15s; }
-.sub-card:last-child { margin-bottom:0; }
-.sub-card:hover { border-color:#363645; }
-.sub-header { display:flex; align-items:flex-start; gap:12px; padding:12px 16px; cursor:pointer; }
-.sub-chevron { color:var(--muted); font-size:10px; margin-top:4px; transition:transform 0.2s; flex-shrink:0; }
-.sub-card.open .sub-chevron { transform:rotate(90deg); }
-.sub-title-area { flex:1; min-width:0; }
-.sub-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.sub-meta { display:flex; gap:6px; flex-wrap:wrap; }
-.tag { font-size:11px; padding:2px 7px; border-radius:99px; background:var(--surface2); color:var(--muted); border:1px solid var(--border); font-family:'DM Mono',monospace; }
-.tag.model { color:var(--accent2); border-color:rgba(124,106,255,0.25); background:rgba(124,106,255,0.07); }
-.tag.date { color:var(--green); border-color:rgba(110,184,169,0.25); background:rgba(110,184,169,0.07); }
-.sub-body { display:none; padding:0 16px 14px; }
-.sub-card.open .sub-body { display:block; }
-.prompt-text { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:12px 14px; font-family:'DM Mono',monospace; font-size:12px; color:#c8ccd4; line-height:1.75; white-space:pre-wrap; word-break:break-word; position:relative; }
-.copy-btn { position:absolute; top:8px; right:8px; padding:3px 9px; background:var(--surface); border:1px solid var(--border); border-radius:6px; color:var(--muted); font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
-.copy-btn:hover { color:var(--text); border-color:var(--accent); }
-.copy-btn.copied { color:var(--green); border-color:var(--green); }
-.sub-notes { margin-top:8px; font-size:12px; color:var(--muted); font-style:italic; }
-.sub-actions { display:flex; gap:6px; margin-top:10px; }
-.add-sub-btn { width:100%; margin-top:10px; padding:9px; border-radius:8px; border:1px dashed var(--border); background:transparent; color:var(--muted); font-family:'DM Sans',sans-serif; font-size:13px; cursor:pointer; transition:all 0.2s; text-align:center; }
-.add-sub-btn:hover { border-color:var(--accent); color:var(--accent); background:rgba(200,169,110,0.04); }
+.sub-card{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;background:var(--bg);transition:border-color 0.15s;}
+.sub-card:last-child{margin-bottom:0;}
+.sub-card:hover{border-color:#363645;}
+.sub-header{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;cursor:pointer;}
+.sub-chevron{color:var(--muted);font-size:10px;margin-top:4px;transition:transform 0.2s;flex-shrink:0;}
+.sub-card.open .sub-chevron{transform:rotate(90deg);}
+.sub-title-area{flex:1;min-width:0;}
+.sub-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sub-meta{display:flex;gap:6px;flex-wrap:wrap;}
+.tag{font-size:11px;padding:2px 7px;border-radius:99px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);font-family:'DM Mono',monospace;}
+.tag.model{color:var(--accent2);border-color:rgba(124,106,255,0.25);background:rgba(124,106,255,0.07);}
+.tag.date{color:var(--green);border-color:rgba(110,184,169,0.25);background:rgba(110,184,169,0.07);}
+.sub-body{display:none;padding:0 16px 14px;}
+.sub-card.open .sub-body{display:block;}
+.prompt-text{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:12px;color:#c8ccd4;line-height:1.75;white-space:pre-wrap;word-break:break-word;position:relative;}
+.copy-btn{position:absolute;top:8px;right:8px;padding:3px 9px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.copy-btn:hover{color:var(--text);border-color:var(--accent);}
+.copy-btn.copied{color:var(--green);border-color:var(--green);}
+.sub-notes{margin-top:8px;font-size:12px;color:var(--muted);font-style:italic;}
+.sub-actions{display:flex;gap:6px;margin-top:10px;}
+.add-sub-btn{width:100%;margin-top:10px;padding:9px;border-radius:8px;border:1px dashed var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;text-align:center;}
+.add-sub-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,0.04);}
 
 /* EMPTY */
-.empty-state { text-align:center; padding:48px 24px; color:var(--muted); }
-.empty-state .icon { font-size:36px; margin-bottom:10px; }
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted);}
+.empty-state .icon{font-size:36px;margin-bottom:10px;}
 
 /* MODAL */
-.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.72); z-index:999; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
-.modal-overlay.open { display:flex; }
-.modal { background:var(--surface); border:1px solid var(--border); border-radius:14px; width:520px; max-width:92vw; max-height:88vh; overflow-y:auto; padding:28px; }
-.modal h3 { font-family:'Playfair Display',serif; font-size:20px; margin-bottom:6px; color:var(--text); }
-.modal .subtitle { font-size:13px; color:var(--muted); margin-bottom:20px; }
-.form-group { margin-bottom:14px; }
-.form-group label { display:block; font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:5px; }
-.form-group input, .form-group textarea, .form-group select { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:13px; padding:9px 12px; outline:none; transition:border-color 0.2s; resize:vertical; }
-.form-group input:focus, .form-group textarea:focus { border-color:var(--accent); }
-.form-group textarea { min-height:90px; }
-.form-group select option { background:var(--surface2); }
-.form-hint { font-size:11px; color:var(--muted); margin-top:5px; }
-.form-hint a { color:var(--accent); }
-.modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:18px; }
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:999;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;width:520px;max-width:92vw;max-height:88vh;overflow-y:auto;padding:28px;}
+.modal h3{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:6px;color:var(--text);}
+.modal .subtitle{font-size:13px;color:var(--muted);margin-bottom:20px;}
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:border-color 0.2s;resize:vertical;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);}
+.form-group input.error,.form-group textarea.error{border-color:var(--red);}
+.form-group textarea{min-height:90px;}
+.form-group select option{background:var(--surface2);}
+.field-error{font-size:11px;color:var(--red);margin-top:4px;display:none;}
+.field-error.show{display:block;}
+.form-hint{font-size:11px;color:var(--muted);margin-top:5px;}
+.form-hint a{color:var(--accent);}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;}
 
 /* SETUP SCREEN */
-#setup-screen { display:none; position:fixed; inset:0; background:var(--bg); z-index:500; align-items:center; justify-content:center; }
-#setup-screen.show { display:flex; }
-.setup-box { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:36px; width:480px; max-width:92vw; }
-.setup-box h2 { font-family:'Playfair Display',serif; font-size:24px; color:var(--accent); margin-bottom:8px; }
-.setup-box p { font-size:13px; color:var(--muted); margin-bottom:24px; line-height:1.7; }
-.setup-steps { margin-bottom:24px; }
-.setup-step { display:flex; gap:12px; margin-bottom:12px; align-items:flex-start; }
-.step-num { width:22px; height:22px; border-radius:50%; background:var(--accent); color:#0e0e10; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
-.step-text { font-size:13px; color:var(--text); line-height:1.6; }
-.step-text a { color:var(--accent); }
-.setup-input-group { display:flex; gap:8px; margin-top:20px; }
-.setup-input-group input { flex:1; padding:10px 14px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'DM Mono',monospace; font-size:13px; outline:none; transition:border-color 0.2s; }
-.setup-input-group input:focus { border-color:var(--accent); }
-#setup-error { font-size:12px; color:var(--red); margin-top:8px; display:none; }
+#setup-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:500;align-items:center;justify-content:center;}
+#setup-screen.show{display:flex;}
+.setup-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:36px;width:480px;max-width:92vw;}
+.setup-box h2{font-family:'Playfair Display',serif;font-size:24px;color:var(--accent);margin-bottom:8px;}
+.setup-box p{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.7;}
+.setup-step{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.step-num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#0e0e10;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-text{font-size:13px;color:var(--text);line-height:1.6;}
+.step-text a{color:var(--accent);}
+.setup-input-group{display:flex;gap:8px;margin-top:20px;}
+.setup-input-group input{flex:1;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;outline:none;transition:border-color 0.2s;}
+.setup-input-group input:focus{border-color:var(--accent);}
+#setup-error{font-size:12px;color:var(--red);margin-top:8px;display:none;}
 
 @media(max-width:720px){
   #sidebar{display:none;}
   #main{margin-left:0;padding:20px 16px 48px;}
   #stats{flex-wrap:wrap;}
   .topbar-right .btn:not(.primary){display:none;}
+  #sync-status{display:none;}
 }
 </style>
 </head>
 <body>
+
+<div id="toast"></div>
 
 <!-- SETUP SCREEN -->
 <div id="setup-screen">
   <div class="setup-box">
     <h2>✦ Prompt Library</h2>
     <p>Hubungkan ke GitHub Gist agar prompt kamu tersinkron di semua perangkat.</p>
-    <div class="setup-steps">
-      <div class="setup-step"><div class="step-num">1</div><div class="step-text">Buka <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a></div></div>
-      <div class="setup-step"><div class="step-num">2</div><div class="step-text">Klik <b>Generate new token (classic)</b></div></div>
-      <div class="setup-step"><div class="step-num">3</div><div class="step-text">Centang scope <b>gist</b> saja, lalu generate</div></div>
-      <div class="setup-step"><div class="step-num">4</div><div class="step-text">Paste token di bawah ini</div></div>
-    </div>
+    <div class="setup-step"><div class="step-num">1</div><div class="step-text">Buka <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a></div></div>
+    <div class="setup-step"><div class="step-num">2</div><div class="step-text">Klik <b>Generate new token (classic)</b></div></div>
+    <div class="setup-step"><div class="step-num">3</div><div class="step-text">Centang scope <b>gist</b> saja, lalu generate</div></div>
+    <div class="setup-step"><div class="step-num">4</div><div class="step-text">Paste token di bawah ini</div></div>
     <div class="setup-input-group">
       <input id="token-input" type="password" placeholder="github_pat_...">
-      <button class="btn primary" onclick="connectGist()">Sambungkan</button>
+      <button class="btn primary" id="connect-btn" onclick="connectGist()">Sambungkan</button>
     </div>
     <div id="setup-error"></div>
   </div>
@@ -178,10 +190,10 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 <header id="topbar">
   <span class="logo">✦ Prompt Library</span>
   <div class="topbar-div"></div>
-  <input id="search-box" type="text" placeholder="🔍  Cari prompt..." oninput="doSearch(this.value)">
+  <input id="search-box" type="text" placeholder="🔍  Cari prompt..." oninput="onSearch(this.value)">
   <div class="topbar-right">
     <div id="sync-status"><div id="sync-dot"></div><span id="sync-text">–</span></div>
-    <button class="btn" onclick="forcSync()" title="Sync sekarang">↻ Sync</button>
+    <button class="btn" onclick="forceSync()" id="sync-btn">↻ Sync</button>
     <button class="btn" onclick="showSettings()">⚙</button>
     <button class="btn primary" onclick="openMasterModal()">+ Master</button>
   </div>
@@ -204,9 +216,13 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 <div class="modal-overlay" id="master-modal">
   <div class="modal">
     <h3 id="master-modal-title">Tambah Master Prompt</h3>
-    <div class="form-group"><label>Nama Master *</label><input id="m-name" type="text" placeholder="Contoh: Writing, Coding, Business..."></div>
+    <div class="form-group">
+      <label>Nama Master *</label>
+      <input id="m-name" type="text" placeholder="Contoh: Writing, Coding..." maxlength="50">
+      <div class="field-error" id="m-name-err">Nama wajib diisi (maks 50 karakter)</div>
+    </div>
     <div class="form-group"><label>Icon (emoji)</label><input id="m-icon" type="text" placeholder="📁" maxlength="4"></div>
-    <div class="form-group"><label>Deskripsi</label><input id="m-desc" type="text" placeholder="Singkat tentang kategori ini..."></div>
+    <div class="form-group"><label>Deskripsi</label><input id="m-desc" type="text" placeholder="Singkat tentang kategori ini..." maxlength="120"></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeMasterModal()">Batal</button>
       <button class="btn primary" onclick="saveMaster()">Simpan</button>
@@ -219,11 +235,19 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
   <div class="modal">
     <h3 id="sub-modal-title">Tambah Sub Prompt</h3>
     <div class="form-group"><label>Master Prompt *</label><select id="s-master"></select></div>
-    <div class="form-group"><label>Judul *</label><input id="s-title" type="text" placeholder="Contoh: Email Formal ke Klien"></div>
-    <div class="form-group"><label>Isi Prompt *</label><textarea id="s-prompt" placeholder="Tulis prompt kamu di sini..."></textarea></div>
-    <div class="form-group"><label>Model / Platform</label><input id="s-model" type="text" placeholder="Claude, GPT-4, Gemini..."></div>
-    <div class="form-group"><label>Tags (pisahkan koma)</label><input id="s-tags" type="text" placeholder="kreatif, formal, analisis"></div>
-    <div class="form-group"><label>Catatan</label><textarea id="s-notes" placeholder="Tips atau konteks..." style="min-height:60px"></textarea></div>
+    <div class="form-group">
+      <label>Judul *</label>
+      <input id="s-title" type="text" placeholder="Contoh: Email Formal ke Klien" maxlength="100">
+      <div class="field-error" id="s-title-err">Judul wajib diisi (maks 100 karakter)</div>
+    </div>
+    <div class="form-group">
+      <label>Isi Prompt *</label>
+      <textarea id="s-prompt" placeholder="Tulis prompt kamu di sini..." maxlength="10000"></textarea>
+      <div class="field-error" id="s-prompt-err">Prompt wajib diisi (maks 10.000 karakter)</div>
+    </div>
+    <div class="form-group"><label>Model / Platform</label><input id="s-model" type="text" placeholder="Claude, GPT-4, Gemini..." maxlength="50"></div>
+    <div class="form-group"><label>Tags (pisahkan koma)</label><input id="s-tags" type="text" placeholder="kreatif, formal, analisis" maxlength="200"></div>
+    <div class="form-group"><label>Catatan</label><textarea id="s-notes" placeholder="Tips atau konteks..." style="min-height:60px" maxlength="500"></textarea></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeSubModal()">Batal</button>
       <button class="btn primary" onclick="saveSub()">Simpan</button>
@@ -242,8 +266,8 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
       <div class="form-hint">Token hanya disimpan di browser ini. <a href="https://github.com/settings/tokens" target="_blank">Buat token baru</a></div>
     </div>
     <div class="form-group">
-      <label>Gist ID (otomatis terisi)</label>
-      <input id="settings-gist-id" type="text" placeholder="Akan terisi otomatis setelah connect" readonly style="opacity:0.5">
+      <label>Gist ID</label>
+      <input id="settings-gist-id" type="text" readonly style="opacity:0.5;cursor:default">
     </div>
     <div class="modal-actions">
       <button class="btn danger" onclick="disconnectGist()">Disconnect</button>
@@ -254,23 +278,142 @@ body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────
-const LS_TOKEN  = 'pl_gh_token';
-const LS_GIST   = 'pl_gist_id';
-const LS_DATA   = 'pl_data_v2';
+// ── CONSTANTS ─────────────────────────────────────────────
+const LS_TOKEN = 'pl_gh_token';
+const LS_GIST  = 'pl_gist_id';
+const LS_DATA  = 'pl_data_v2';
 const GIST_FILE = 'prompt-library.json';
+const MAX_RETRIES = 3;
+const RETRY_BASE_MS = 800;
 
-let activeTab = 'all';
-let editMasterId = null;
-let editSubId = null;
-let subTargetMasterId = null;
-let isSyncing = false;
+// ── STATE ─────────────────────────────────────────────────
+const State = {
+  activeTab: 'all',
+  editMasterId: null,
+  editSubId: null,
+  subTargetMasterId: null,
+  isSyncing: false,
+  lastSaveAt: 0,
+  searchTimer: null,
+};
+
+// ── TOAST ─────────────────────────────────────────────────
+function toast(msg, type = 'info', duration = 3000) {
+  const container = document.getElementById('toast');
+  const el = document.createElement('div');
+  el.className = 'toast-item ' + type;
+  el.textContent = msg;
+  container.appendChild(el);
+  requestAnimationFrame(() => { requestAnimationFrame(() => el.classList.add('show')); });
+  setTimeout(() => {
+    el.classList.remove('show');
+    setTimeout(() => el.remove(), 300);
+  }, duration);
+}
+
+// ── SANITIZE ──────────────────────────────────────────────
+// Strip all HTML tags and dangerous characters from user input
+function sanitize(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/\//g, '&#x2F;');
+}
+
+// For displaying in DOM safely — returns text node safe string
+function escH(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Clean and trim user input before saving
+function cleanInput(str, maxLen = 1000) {
+  if (typeof str !== 'string') return '';
+  return str.trim().slice(0, maxLen);
+}
+
+// ── VALIDATION ────────────────────────────────────────────
+function validateMasterForm() {
+  const name = document.getElementById('m-name').value.trim();
+  let valid = true;
+  const nameErr = document.getElementById('m-name-err');
+  if (!name || name.length > 50) {
+    document.getElementById('m-name').classList.add('error');
+    nameErr.classList.add('show'); valid = false;
+  } else {
+    document.getElementById('m-name').classList.remove('error');
+    nameErr.classList.remove('show');
+  }
+  return valid;
+}
+
+function validateSubForm() {
+  let valid = true;
+  const checks = [
+    { id: 's-title', errId: 's-title-err', max: 100 },
+    { id: 's-prompt', errId: 's-prompt-err', max: 10000 },
+  ];
+  checks.forEach(({ id, errId, max }) => {
+    const val = document.getElementById(id).value.trim();
+    const errEl = document.getElementById(errId);
+    if (!val || val.length > max) {
+      document.getElementById(id).classList.add('error');
+      errEl.classList.add('show'); valid = false;
+    } else {
+      document.getElementById(id).classList.remove('error');
+      errEl.classList.remove('show');
+    }
+  });
+  return valid;
+}
+
+// ── DEBOUNCE ──────────────────────────────────────────────
+function debounce(fn, ms) {
+  return function(...args) {
+    clearTimeout(State.searchTimer);
+    State.searchTimer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+const onSearch = debounce(q => render(q), 280);
+
+// ── RATE LIMITER ──────────────────────────────────────────
+const RateLimit = {
+  calls: [],
+  MAX_PER_MINUTE: 20,
+  check() {
+    const now = Date.now();
+    this.calls = this.calls.filter(t => now - t < 60000);
+    if (this.calls.length >= this.MAX_PER_MINUTE) {
+      throw new Error('Terlalu banyak request. Tunggu sebentar lalu coba lagi.');
+    }
+    this.calls.push(now);
+  }
+};
+
+// ── RETRY WITH EXPONENTIAL BACKOFF ────────────────────────
+async function withRetry(fn, retries = MAX_RETRIES) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      const isLast = attempt === retries;
+      const isNetworkErr = !err.message.includes('401') && !err.message.includes('404');
+      if (isLast || !isNetworkErr) throw err;
+      const delay = RETRY_BASE_MS * Math.pow(2, attempt);
+      setSyncStatus('loading', `Retry ${attempt + 1}/${retries}...`);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+}
 
 // ── GIST API ─────────────────────────────────────────────
 function getToken() { return localStorage.getItem(LS_TOKEN); }
 function getGistId() { return localStorage.getItem(LS_GIST); }
 
 async function gistRequest(method, path, body) {
+  RateLimit.check();
   const res = await fetch('https://api.github.com' + path, {
     method,
     headers: {
@@ -280,28 +423,31 @@ async function gistRequest(method, path, body) {
     },
     body: body ? JSON.stringify(body) : undefined
   });
-  if (!res.ok) throw new Error('HTTP ' + res.status);
+  if (res.status === 401) throw new Error('401: Token tidak valid atau expired');
+  if (res.status === 403) throw new Error('403: Akses ditolak. Cek scope token (harus ada "gist")');
+  if (res.status === 404) throw new Error('404: Gist tidak ditemukan');
+  if (!res.ok) throw new Error('HTTP ' + res.status + ': Gagal terhubung ke GitHub');
   return res.json();
 }
 
 async function loadFromGist() {
   const gistId = getGistId();
   if (!gistId) return null;
-  const data = await gistRequest('GET', '/gists/' + gistId);
+  const data = await withRetry(() => gistRequest('GET', '/gists/' + gistId));
   const content = data.files[GIST_FILE]?.content;
   if (!content) return null;
   return JSON.parse(content);
 }
 
 async function saveToGist(data) {
-  const gistId = getGistId();
   const body = { files: { [GIST_FILE]: { content: JSON.stringify(data, null, 2) } } };
+  const gistId = getGistId();
   if (gistId) {
-    await gistRequest('PATCH', '/gists/' + gistId, body);
+    await withRetry(() => gistRequest('PATCH', '/gists/' + gistId, body));
   } else {
     body.description = 'Prompt Library Data';
     body.public = false;
-    const res = await gistRequest('POST', '/gists', body);
+    const res = await withRetry(() => gistRequest('POST', '/gists', body));
     localStorage.setItem(LS_GIST, res.id);
   }
 }
@@ -311,73 +457,75 @@ async function connectGist() {
   const token = document.getElementById('token-input').value.trim();
   const errEl = document.getElementById('setup-error');
   errEl.style.display = 'none';
-
-  if (!token) { showSetupError('Token tidak boleh kosong.'); return; }
-
-  const btn = document.querySelector('#setup-screen .btn.primary');
+  if (!token || !token.startsWith('github_pat_') && !token.startsWith('ghp_')) {
+    errEl.textContent = 'Format token tidak valid. Pastikan copy token lengkap dari GitHub.';
+    errEl.style.display = 'block'; return;
+  }
+  const btn = document.getElementById('connect-btn');
   btn.textContent = 'Menyambungkan...'; btn.disabled = true;
-
   try {
-    // validate token
     const res = await fetch('https://api.github.com/user', {
-      headers: { 'Authorization': 'token ' + token }
+      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
     });
-    if (!res.ok) throw new Error('Token tidak valid');
-
+    if (!res.ok) throw new Error('Token tidak valid (status ' + res.status + ')');
+    const user = await res.json();
     localStorage.setItem(LS_TOKEN, token);
-
-    // try load existing gist
     setSyncStatus('loading', 'Mencari data...');
-    const gists = await gistRequest('GET', '/gists');
-    const existing = gists.find(g => g.files[GIST_FILE]);
+
+    // search for existing gist
+    const gists = await withRetry(() =>
+      fetch('https://api.github.com/gists', {
+        headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
+      }).then(r => r.json())
+    );
+    const existing = Array.isArray(gists) ? gists.find(g => g.files && g.files[GIST_FILE]) : null;
 
     if (existing) {
       localStorage.setItem(LS_GIST, existing.id);
       const d = await loadFromGist();
-      if (d) { localStorage.setItem(LS_DATA, JSON.stringify(d)); }
+      if (d) localStorage.setItem(LS_DATA, JSON.stringify(d));
+      toast('✓ Data ditemukan dan dimuat!', 'success');
     } else {
-      // create new gist with default data
       const d = defaultData();
       localStorage.setItem(LS_DATA, JSON.stringify(d));
       await saveToGist(d);
+      toast('✓ Gist baru dibuat untuk ' + user.login, 'success');
     }
-
     document.getElementById('setup-screen').classList.remove('show');
     setSyncStatus('ok', 'Tersinkron');
     render();
   } catch(e) {
-    showSetupError('Gagal: ' + e.message + '. Pastikan token valid dan scope gist dicentang.');
+    errEl.textContent = 'Gagal: ' + e.message;
+    errEl.style.display = 'block';
     btn.textContent = 'Sambungkan'; btn.disabled = false;
+    setSyncStatus('err', 'Gagal connect');
   }
-}
-
-function showSetupError(msg) {
-  const el = document.getElementById('setup-error');
-  el.textContent = msg; el.style.display = 'block';
 }
 
 // ── SYNC STATUS ──────────────────────────────────────────
 function setSyncStatus(state, text) {
-  const dot = document.getElementById('sync-dot');
-  const txt = document.getElementById('sync-text');
-  dot.className = state; txt.textContent = text;
+  document.getElementById('sync-dot').className = state;
+  document.getElementById('sync-text').textContent = text;
 }
 
-async function forcSync() {
-  if (isSyncing) return;
-  isSyncing = true;
+async function forceSync() {
+  if (State.isSyncing) return;
+  State.isSyncing = true;
+  const btn = document.getElementById('sync-btn');
+  btn.disabled = true;
   setSyncStatus('loading', 'Menyinkron...');
   try {
     const d = await loadFromGist();
-    if (d) {
-      localStorage.setItem(LS_DATA, JSON.stringify(d));
-      render();
-    }
-    setSyncStatus('ok', 'Tersinkron ' + new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+    if (d) { localStorage.setItem(LS_DATA, JSON.stringify(d)); render(); }
+    const t = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+    setSyncStatus('ok', 'Tersinkron ' + t);
+    toast('Data berhasil disinkron', 'success');
   } catch(e) {
     setSyncStatus('err', 'Gagal sync');
+    toast('Gagal sync: ' + e.message, 'error', 5000);
   }
-  isSyncing = false;
+  State.isSyncing = false;
+  btn.disabled = false;
 }
 
 // ── DATA ─────────────────────────────────────────────────
@@ -388,21 +536,24 @@ function load() {
 
 async function persist(d) {
   localStorage.setItem(LS_DATA, JSON.stringify(d));
+  State.lastSaveAt = Date.now();
   setSyncStatus('loading', 'Menyimpan...');
   try {
     await saveToGist(d);
-    setSyncStatus('ok', 'Tersimpan ' + new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'}));
+    const t = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+    setSyncStatus('ok', 'Tersimpan ' + t);
   } catch(e) {
-    setSyncStatus('err', 'Gagal simpan ke Gist');
+    setSyncStatus('err', 'Gagal simpan');
+    toast('Gagal simpan ke Gist: ' + e.message, 'error', 5000);
   }
 }
 
 function defaultData() {
   return {
     masters: [
-      { id:'m1', name:'Writing', icon:'✍️', desc:'Prompt untuk menulis konten, email, artikel' },
-      { id:'m2', name:'Coding',  icon:'💻', desc:'Prompt untuk programming dan debugging' },
-      { id:'m3', name:'Business',icon:'💼', desc:'Prompt untuk analisis dan keperluan bisnis' },
+      { id:'m1', name:'Writing',  icon:'✍️', desc:'Prompt untuk menulis konten, email, artikel' },
+      { id:'m2', name:'Coding',   icon:'💻', desc:'Prompt untuk programming dan debugging' },
+      { id:'m3', name:'Business', icon:'💼', desc:'Prompt untuk analisis dan keperluan bisnis' },
     ],
     subs: [
       { id:'sub1', masterId:'m1', title:'Email Profesional', prompt:'Tulis email profesional dengan nada [formal/santai] kepada [NAMA] tentang:\n\n[TOPIK]\n\nPastikan:\n- Pembukaan sopan\n- Isi jelas dan padat\n- Permintaan spesifik\n- Penutup profesional', model:'Claude', tags:['email','formal'], notes:'Ganti bagian dalam kurung.', date:new Date().toISOString() },
@@ -418,77 +569,95 @@ function render(q) {
   q = q !== undefined ? q : (document.getElementById('search-box').value || '');
   const ql = q.toLowerCase();
   const { masters, subs } = load();
+  const now = new Date();
 
   // stats
-  const now = new Date();
-  const thisMonth = subs.filter(s => { const d=new Date(s.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+  const thisMonth = subs.filter(s => {
+    const d = new Date(s.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
   document.getElementById('s-masters').textContent = masters.length;
   document.getElementById('s-subs').textContent = subs.length;
   document.getElementById('s-month').textContent = thisMonth.length;
 
   // sidebar
-  let sbHtml = `<div class="sb-item ${activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua<span class="sb-badge">${subs.length}</span></div>`;
+  let sbHtml = `<div class="sb-item ${State.activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua<span class="sb-badge">${subs.length}</span></div>`;
   masters.forEach(m => {
-    const cnt = subs.filter(s=>s.masterId===m.id).length;
-    sbHtml += `<div class="sb-item ${activeTab===m.id?'active':''}" onclick="setTab('${m.id}')">${m.icon} ${m.name}<span class="sb-badge">${cnt}</span></div>`;
+    const cnt = subs.filter(s => s.masterId === m.id).length;
+    const id = escH(m.id);
+    sbHtml += `<div class="sb-item ${State.activeTab===m.id?'active':''}" onclick="setTab('${id}')">${m.icon} ${escH(m.name)}<span class="sb-badge">${cnt}</span></div>`;
   });
   document.getElementById('sb-list').innerHTML = sbHtml;
 
   // tabs
-  let tabHtml = `<button class="tab ${activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua <span class="tc">${subs.length}</span></button>`;
+  let tabHtml = `<button class="tab ${State.activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua <span class="tc">${subs.length}</span></button>`;
   masters.forEach(m => {
-    const cnt = subs.filter(s=>s.masterId===m.id&&matchSub(s,ql)).length;
-    if (ql && cnt===0) return;
-    tabHtml += `<button class="tab ${activeTab===m.id?'active':''}" onclick="setTab('${m.id}')">${m.icon} ${m.name} <span class="tc">${ql?cnt:subs.filter(s=>s.masterId===m.id).length}</span></button>`;
+    const cnt = subs.filter(s => s.masterId === m.id && matchSub(s, ql)).length;
+    if (ql && cnt === 0) return;
+    const id = escH(m.id);
+    tabHtml += `<button class="tab ${State.activeTab===m.id?'active':''}" onclick="setTab('${id}')">${m.icon} ${escH(m.name)} <span class="tc">${ql ? cnt : subs.filter(s=>s.masterId===m.id).length}</span></button>`;
   });
   document.getElementById('tab-bar').innerHTML = tabHtml;
 
   // content
   const content = document.getElementById('content');
   content.innerHTML = '';
-  const visMasters = activeTab==='all' ? masters : masters.filter(m=>m.id===activeTab);
+  const visMasters = State.activeTab === 'all' ? masters : masters.filter(m => m.id === State.activeTab);
   let any = false;
   visMasters.forEach(m => {
-    const mSubs = subs.filter(s=>s.masterId===m.id&&matchSub(s,ql));
-    if (ql && mSubs.length===0) return;
+    const mSubs = subs.filter(s => s.masterId === m.id && matchSub(s, ql));
+    if (ql && mSubs.length === 0) return;
     any = true;
-    content.appendChild(buildMasterBlock(m, ql ? mSubs : subs.filter(s=>s.masterId===m.id)));
+    content.appendChild(buildMasterBlock(m, ql ? mSubs : subs.filter(s => s.masterId === m.id)));
   });
   if (!any) content.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>Tidak ada prompt yang cocok.</p></div>`;
 
-  // update select
+  // update master select
   const sel = document.getElementById('s-master');
-  sel.innerHTML = masters.map(m=>`<option value="${m.id}">${m.icon} ${m.name}</option>`).join('');
+  sel.innerHTML = masters.map(m => `<option value="${escH(m.id)}">${m.icon} ${escH(m.name)}</option>`).join('');
 }
 
 function buildMasterBlock(m, mSubs) {
   const block = document.createElement('div');
   block.className = 'master-block open';
   block.id = 'mb-' + m.id;
-  block.innerHTML = `
-    <div class="master-header" onclick="toggleMaster('${m.id}')">
-      <span class="master-chevron">▶</span>
-      <span class="master-icon">${m.icon}</span>
-      <div style="flex:1">
-        <div class="master-title">${m.name}</div>
-        ${m.desc?`<div class="master-desc">${m.desc}</div>`:''}
-      </div>
-      <span class="master-count">${mSubs.length} prompt</span>
-      <div class="master-actions" onclick="event.stopPropagation()">
-        <button class="btn sm" onclick="openEditMaster('${m.id}')">✏️</button>
-        <button class="btn sm danger" onclick="deleteMaster('${m.id}')">🗑</button>
-      </div>
+  const titleEl = document.createElement('div');
+  titleEl.className = 'master-header';
+  titleEl.innerHTML = `
+    <span class="master-chevron">▶</span>
+    <span class="master-icon">${m.icon}</span>
+    <div style="flex:1">
+      <div class="master-title">${escH(m.name)}</div>
+      ${m.desc ? `<div class="master-desc">${escH(m.desc)}</div>` : ''}
     </div>
-    <div class="master-body" id="mb-body-${m.id}"></div>
+    <span class="master-count">${mSubs.length} prompt</span>
+    <div class="master-actions">
+      <button class="btn sm" data-edit-master="${escH(m.id)}">✏️</button>
+      <button class="btn sm danger" data-del-master="${escH(m.id)}">🗑</button>
+    </div>
   `;
-  const body = block.querySelector('.master-body');
-  if (!mSubs.length) body.innerHTML = `<div style="padding:10px 4px;color:var(--muted);font-size:13px;font-style:italic">Belum ada sub prompt.</div>`;
-  else mSubs.forEach(s => body.appendChild(buildSubCard(s)));
+  titleEl.querySelector('[data-edit-master]').onclick = e => { e.stopPropagation(); openEditMaster(m.id); };
+  titleEl.querySelector('[data-del-master]').onclick = e => { e.stopPropagation(); deleteMaster(m.id); };
+  titleEl.addEventListener('click', () => toggleMaster(m.id));
+  block.appendChild(titleEl);
+
+  const body = document.createElement('div');
+  body.className = 'master-body';
+  body.id = 'mb-body-' + m.id;
+  if (!mSubs.length) {
+    const empty = document.createElement('div');
+    empty.style.cssText = 'padding:10px 4px;color:var(--muted);font-size:13px;font-style:italic';
+    empty.textContent = 'Belum ada sub prompt.';
+    body.appendChild(empty);
+  } else {
+    mSubs.forEach(s => body.appendChild(buildSubCard(s)));
+  }
   const addBtn = document.createElement('button');
   addBtn.className = 'add-sub-btn';
   addBtn.textContent = '+ Tambah Sub Prompt';
   addBtn.onclick = () => openSubModal(m.id);
   body.appendChild(addBtn);
+  block.appendChild(body);
   return block;
 }
 
@@ -496,144 +665,195 @@ function buildSubCard(s) {
   const card = document.createElement('div');
   card.className = 'sub-card';
   card.id = 'sc-' + s.id;
-  const tags = (s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
-  const modelTag = s.model?`<span class="tag model">${s.model}</span>`:'';
-  const dateStr = s.date?new Date(s.date).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}):'';
-  const dateTag = dateStr?`<span class="tag date">${dateStr}</span>`:'';
+  const tags = (s.tags || []).map(t => `<span class="tag">${escH(t)}</span>`).join('');
+  const modelTag = s.model ? `<span class="tag model">${escH(s.model)}</span>` : '';
+  const dateStr = s.date ? new Date(s.date).toLocaleDateString('id-ID', {day:'numeric',month:'short',year:'numeric'}) : '';
+  const dateTag = dateStr ? `<span class="tag date">${dateStr}</span>` : '';
+
+  // Build using DOM to avoid XSS in prompt text
   card.innerHTML = `
-    <div class="sub-header" onclick="toggleSub('${s.id}')">
+    <div class="sub-header">
       <span class="sub-chevron">▶</span>
       <div class="sub-title-area">
-        <div class="sub-title">${s.title}</div>
+        <div class="sub-title">${escH(s.title)}</div>
         <div class="sub-meta">${modelTag}${tags}${dateTag}</div>
       </div>
     </div>
     <div class="sub-body">
-      <div class="prompt-text" id="pt-${s.id}">${escH(s.prompt)}<button class="copy-btn" onclick="doCopy(event,'pt-${s.id}')">Salin</button></div>
-      ${s.notes?`<div class="sub-notes">📌 ${escH(s.notes)}</div>`:''}
+      <div class="prompt-text"><button class="copy-btn">Salin</button></div>
+      ${s.notes ? `<div class="sub-notes">📌 ${escH(s.notes)}</div>` : ''}
       <div class="sub-actions">
-        <button class="btn sm" onclick="openEditSub('${s.id}')">✏️ Edit</button>
-        <button class="btn sm danger" onclick="deleteSub('${s.id}')">🗑 Hapus</button>
+        <button class="btn sm">✏️ Edit</button>
+        <button class="btn sm danger">🗑 Hapus</button>
       </div>
     </div>
   `;
+
+  // Set prompt text safely as textContent (not innerHTML)
+  const promptBox = card.querySelector('.prompt-text');
+  const textNode = document.createTextNode(s.prompt || '');
+  promptBox.insertBefore(textNode, promptBox.querySelector('.copy-btn'));
+
+  card.querySelector('.sub-header').onclick = () => toggleSub(s.id);
+  card.querySelector('.copy-btn').onclick = e => doCopy(e, s.id, s.prompt);
+  card.querySelectorAll('.sub-actions .btn')[0].onclick = () => openEditSub(s.id);
+  card.querySelectorAll('.sub-actions .btn')[1].onclick = () => deleteSub(s.id);
   return card;
 }
 
 // ── INTERACTIONS ─────────────────────────────────────────
-function toggleMaster(id) { document.getElementById('mb-'+id).classList.toggle('open'); }
-function toggleSub(id) { document.getElementById('sc-'+id).classList.toggle('open'); }
-function setTab(id) { activeTab=id; render(); }
-function doSearch(q) { render(q); }
-function doCopy(e, id) {
+function toggleMaster(id) { document.getElementById('mb-' + id)?.classList.toggle('open'); }
+function toggleSub(id) { document.getElementById('sc-' + id)?.classList.toggle('open'); }
+function setTab(id) { State.activeTab = id; render(); }
+
+function doCopy(e, id, rawText) {
   e.stopPropagation();
-  const text = document.getElementById(id).innerText.replace('Salin','').trim();
-  navigator.clipboard.writeText(text).then(()=>{
-    const b=e.target; b.textContent='✓ Disalin'; b.classList.add('copied');
-    setTimeout(()=>{ b.textContent='Salin'; b.classList.remove('copied'); },2000);
-  });
+  navigator.clipboard.writeText(rawText).then(() => {
+    const b = e.target;
+    b.textContent = '✓ Disalin'; b.classList.add('copied');
+    setTimeout(() => { b.textContent = 'Salin'; b.classList.remove('copied'); }, 2000);
+    toast('Prompt disalin!', 'success', 1500);
+  }).catch(() => toast('Gagal menyalin', 'error'));
 }
 
 // ── MASTER MODAL ─────────────────────────────────────────
 function openMasterModal() {
-  editMasterId=null;
-  document.getElementById('master-modal-title').textContent='Tambah Master Prompt';
-  ['m-name','m-icon','m-desc'].forEach(id=>document.getElementById(id).value='');
+  State.editMasterId = null;
+  document.getElementById('master-modal-title').textContent = 'Tambah Master Prompt';
+  ['m-name','m-icon','m-desc'].forEach(id => document.getElementById(id).value = '');
+  ['m-name'].forEach(id => { document.getElementById(id).classList.remove('error'); document.getElementById(id + '-err').classList.remove('show'); });
   document.getElementById('master-modal').classList.add('open');
 }
 function openEditMaster(id) {
-  const m=load().masters.find(x=>x.id===id); if(!m) return;
-  editMasterId=id;
-  document.getElementById('master-modal-title').textContent='Edit Master Prompt';
-  document.getElementById('m-name').value=m.name;
-  document.getElementById('m-icon').value=m.icon;
-  document.getElementById('m-desc').value=m.desc||'';
+  const m = load().masters.find(x => x.id === id); if (!m) return;
+  State.editMasterId = id;
+  document.getElementById('master-modal-title').textContent = 'Edit Master Prompt';
+  document.getElementById('m-name').value = m.name;
+  document.getElementById('m-icon').value = m.icon;
+  document.getElementById('m-desc').value = m.desc || '';
   document.getElementById('master-modal').classList.add('open');
 }
-function closeMasterModal() { document.getElementById('master-modal').classList.remove('open'); editMasterId=null; }
+function closeMasterModal() { document.getElementById('master-modal').classList.remove('open'); State.editMasterId = null; }
+
 async function saveMaster() {
-  const name=document.getElementById('m-name').value.trim();
-  if(!name){alert('Nama master wajib diisi!');return;}
-  const d=load();
-  const entry={name,icon:document.getElementById('m-icon').value.trim()||'📁',desc:document.getElementById('m-desc').value.trim()};
-  if(editMasterId){ const idx=d.masters.findIndex(x=>x.id===editMasterId); if(idx!==-1) d.masters[idx]={...d.masters[idx],...entry}; }
-  else d.masters.push({id:'m'+Date.now(),...entry});
+  if (!validateMasterForm()) return;
+  const d = load();
+  const entry = {
+    name: cleanInput(document.getElementById('m-name').value, 50),
+    icon: cleanInput(document.getElementById('m-icon').value, 4) || '📁',
+    desc: cleanInput(document.getElementById('m-desc').value, 120),
+  };
+  if (State.editMasterId) {
+    const idx = d.masters.findIndex(x => x.id === State.editMasterId);
+    if (idx !== -1) d.masters[idx] = { ...d.masters[idx], ...entry };
+    toast('Master prompt diperbarui', 'success');
+  } else {
+    d.masters.push({ id: 'm' + Date.now(), ...entry });
+    toast('Master prompt ditambahkan', 'success');
+  }
   closeMasterModal(); await persist(d); render();
 }
+
 async function deleteMaster(id) {
-  if(!confirm('Hapus master prompt beserta semua sub prompt di dalamnya?')) return;
-  const d=load();
-  d.masters=d.masters.filter(x=>x.id!==id);
-  d.subs=d.subs.filter(x=>x.masterId!==id);
-  if(activeTab===id) activeTab='all';
+  const m = load().masters.find(x => x.id === id);
+  if (!confirm(`Hapus master "${m?.name}" beserta semua sub prompt di dalamnya?`)) return;
+  const d = load();
+  d.masters = d.masters.filter(x => x.id !== id);
+  d.subs = d.subs.filter(x => x.masterId !== id);
+  if (State.activeTab === id) State.activeTab = 'all';
+  toast('Master prompt dihapus', 'info');
   await persist(d); render();
 }
 
 // ── SUB MODAL ────────────────────────────────────────────
 function openSubModal(masterId) {
-  editSubId=null; subTargetMasterId=masterId||null;
-  document.getElementById('sub-modal-title').textContent='Tambah Sub Prompt';
-  ['s-title','s-prompt','s-model','s-tags','s-notes'].forEach(id=>document.getElementById(id).value='');
-  if(masterId) document.getElementById('s-master').value=masterId;
+  State.editSubId = null; State.subTargetMasterId = masterId || null;
+  document.getElementById('sub-modal-title').textContent = 'Tambah Sub Prompt';
+  ['s-title','s-prompt','s-model','s-tags','s-notes'].forEach(id => document.getElementById(id).value = '');
+  ['s-title','s-prompt'].forEach(id => { document.getElementById(id).classList.remove('error'); document.getElementById(id + '-err').classList.remove('show'); });
+  if (masterId) document.getElementById('s-master').value = masterId;
   document.getElementById('sub-modal').classList.add('open');
 }
 function openEditSub(id) {
-  const s=load().subs.find(x=>x.id===id); if(!s) return;
-  editSubId=id;
-  document.getElementById('sub-modal-title').textContent='Edit Sub Prompt';
-  document.getElementById('s-master').value=s.masterId;
-  document.getElementById('s-title').value=s.title;
-  document.getElementById('s-prompt').value=s.prompt;
-  document.getElementById('s-model').value=s.model||'';
-  document.getElementById('s-tags').value=(s.tags||[]).join(', ');
-  document.getElementById('s-notes').value=s.notes||'';
+  const s = load().subs.find(x => x.id === id); if (!s) return;
+  State.editSubId = id;
+  document.getElementById('sub-modal-title').textContent = 'Edit Sub Prompt';
+  document.getElementById('s-master').value = s.masterId;
+  document.getElementById('s-title').value = s.title;
+  document.getElementById('s-prompt').value = s.prompt;
+  document.getElementById('s-model').value = s.model || '';
+  document.getElementById('s-tags').value = (s.tags || []).join(', ');
+  document.getElementById('s-notes').value = s.notes || '';
   document.getElementById('sub-modal').classList.add('open');
 }
-function closeSubModal() { document.getElementById('sub-modal').classList.remove('open'); editSubId=null; }
+function closeSubModal() { document.getElementById('sub-modal').classList.remove('open'); State.editSubId = null; }
+
 async function saveSub() {
-  const masterId=document.getElementById('s-master').value;
-  const title=document.getElementById('s-title').value.trim();
-  const prompt=document.getElementById('s-prompt').value.trim();
-  if(!title||!prompt){alert('Judul dan Prompt wajib diisi!');return;}
-  const d=load();
-  const tags=document.getElementById('s-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
-  const entry={masterId,title,prompt,model:document.getElementById('s-model').value.trim(),tags,notes:document.getElementById('s-notes').value.trim()};
-  if(editSubId){ const idx=d.subs.findIndex(x=>x.id===editSubId); if(idx!==-1) d.subs[idx]={...d.subs[idx],...entry}; }
-  else d.subs.push({id:'s'+Date.now(),...entry,date:new Date().toISOString()});
+  if (!validateSubForm()) return;
+  const d = load();
+  const tags = document.getElementById('s-tags').value
+    .split(',').map(t => cleanInput(t, 30)).filter(Boolean).slice(0, 10);
+  const entry = {
+    masterId: document.getElementById('s-master').value,
+    title:  cleanInput(document.getElementById('s-title').value, 100),
+    prompt: cleanInput(document.getElementById('s-prompt').value, 10000),
+    model:  cleanInput(document.getElementById('s-model').value, 50),
+    tags,
+    notes:  cleanInput(document.getElementById('s-notes').value, 500),
+  };
+  if (State.editSubId) {
+    const idx = d.subs.findIndex(x => x.id === State.editSubId);
+    if (idx !== -1) d.subs[idx] = { ...d.subs[idx], ...entry };
+    toast('Sub prompt diperbarui', 'success');
+  } else {
+    d.subs.push({ id: 's' + Date.now(), ...entry, date: new Date().toISOString() });
+    toast('Sub prompt ditambahkan', 'success');
+  }
   closeSubModal(); await persist(d); render();
 }
+
 async function deleteSub(id) {
-  if(!confirm('Hapus sub prompt ini?')) return;
-  const d=load(); d.subs=d.subs.filter(x=>x.id!==id);
+  const s = load().subs.find(x => x.id === id);
+  if (!confirm(`Hapus sub prompt "${s?.title}"?`)) return;
+  const d = load(); d.subs = d.subs.filter(x => x.id !== id);
+  toast('Sub prompt dihapus', 'info');
   await persist(d); render();
 }
 
 // ── SETTINGS ─────────────────────────────────────────────
 function showSettings() {
-  document.getElementById('settings-token').value=getToken()||'';
-  document.getElementById('settings-gist-id').value=getGistId()||'';
+  document.getElementById('settings-token').value = getToken() || '';
+  document.getElementById('settings-gist-id').value = getGistId() || 'Belum terhubung';
   document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
 async function saveSettings() {
-  const token=document.getElementById('settings-token').value.trim();
-  if(token) localStorage.setItem(LS_TOKEN,token);
-  closeSettings();
-  await forcSync();
+  const token = document.getElementById('settings-token').value.trim();
+  if (token && (token.startsWith('github_pat_') || token.startsWith('ghp_'))) {
+    localStorage.setItem(LS_TOKEN, token);
+    closeSettings(); await forceSync();
+  } else {
+    toast('Format token tidak valid', 'error'); 
+  }
 }
 function disconnectGist() {
-  if(!confirm('Disconnect dan hapus token dari browser ini?')) return;
-  [LS_TOKEN,LS_GIST].forEach(k=>localStorage.removeItem(k));
+  if (!confirm('Disconnect dan hapus token dari browser ini?')) return;
+  [LS_TOKEN, LS_GIST].forEach(k => localStorage.removeItem(k));
   closeSettings();
   document.getElementById('setup-screen').classList.add('show');
 }
 
 // ── HELPERS ──────────────────────────────────────────────
-function matchSub(s,q){ if(!q)return true; return(s.title+s.prompt+(s.tags||[]).join(' ')+(s.notes||'')).toLowerCase().includes(q); }
-function escH(s){ return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function matchSub(s, q) {
+  if (!q) return true;
+  return (s.title + s.prompt + (s.tags||[]).join(' ') + (s.notes||'')).toLowerCase().includes(q);
+}
 
-['master-modal','sub-modal','settings-modal'].forEach(id=>{
-  document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+// Close modals on overlay click
+['master-modal','sub-modal','settings-modal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
 });
 
 // ── INIT ─────────────────────────────────────────────────
@@ -642,13 +862,15 @@ function escH(s){ return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').repla
     document.getElementById('setup-screen').classList.add('show');
     return;
   }
-  setSyncStatus('loading','Memuat data...');
+  setSyncStatus('loading', 'Memuat data...');
   try {
     const d = await loadFromGist();
     if (d) localStorage.setItem(LS_DATA, JSON.stringify(d));
-    setSyncStatus('ok','Tersinkron');
+    const t = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+    setSyncStatus('ok', 'Tersinkron ' + t);
   } catch(e) {
-    setSyncStatus('err','Offline — data lokal');
+    setSyncStatus('err', 'Offline — data lokal');
+    toast('Tidak dapat terhubung ke Gist. Menggunakan data lokal.', 'error', 5000);
   }
   render();
 })();
