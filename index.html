@@ -15,8 +15,16 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
 
-/* TOPBAR */
-#topbar{position:fixed;top:0;left:0;right:0;height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:14px;z-index:200;}
+/* TOPBAR — glassmorphism on scroll */
+#topbar{
+  position:fixed;top:0;left:0;right:0;height:56px;
+  background:rgba(22,22,26,0.85);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:14px;z-index:200;
+  transition:background 0.3s, box-shadow 0.3s;
+}
+#topbar.scrolled{background:rgba(14,14,16,0.95);box-shadow:0 2px 24px rgba(0,0,0,0.4);}
 .logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--accent);font-weight:700;white-space:nowrap;}
 .topbar-div{width:1px;height:20px;background:var(--border);flex-shrink:0;}
 #search-box{flex:1;max-width:280px;padding:7px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color 0.2s;}
@@ -34,7 +42,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 
 /* TOAST */
 #toast{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
-.toast-item{padding:10px 16px;border-radius:10px;font-size:13px;font-family:'DM Sans',sans-serif;opacity:0;transform:translateY(8px);transition:all 0.25s;pointer-events:none;border:1px solid;}
+.toast-item{padding:10px 16px;border-radius:10px;font-size:13px;opacity:0;transform:translateY(8px);transition:all 0.25s;border:1px solid;}
 .toast-item.show{opacity:1;transform:translateY(0);}
 .toast-item.success{background:#0d1f1a;border-color:rgba(110,184,169,0.4);color:var(--green);}
 .toast-item.error{background:#1f0d0d;border-color:rgba(224,112,112,0.4);color:var(--red);}
@@ -81,22 +89,32 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .tab .tc{font-size:11px;background:rgba(0,0,0,0.15);padding:1px 6px;border-radius:99px;}
 
 /* MASTER BLOCK */
-.master-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden;}
-.master-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;transition:background 0.15s;}
-.master-header:hover{background:rgba(255,255,255,0.025);}
-.master-chevron{color:var(--accent);font-size:11px;transition:transform 0.25s;flex-shrink:0;}
+.master-block{border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:border-color 0.2s;}
+.master-block:hover{border-color:#333340;}
+.master-header{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;user-select:none;transition:background 0.15s;border-radius:14px;}
+.master-block.open .master-header{border-radius:14px 14px 0 0;}
+.master-header:hover{background:rgba(255,255,255,0.03);}
+.master-chevron{font-size:10px;transition:transform 0.25s;flex-shrink:0;color:var(--muted);}
 .master-block.open .master-chevron{transform:rotate(90deg);}
 .master-icon{font-size:20px;}
-.master-title{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:var(--text);flex:1;}
+.master-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);flex:1;}
 .master-desc{font-size:12px;color:var(--muted);margin-top:2px;}
-.master-count{font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:99px;}
-.master-actions{display:flex;gap:6px;margin-left:8px;}
-.master-body{display:none;padding:0 16px 16px;}
+
+/* Color accent strip */
+.master-block[data-color="indigo"] .master-header{border-left:3px solid #7c6aff;}
+.master-block[data-color="emerald"] .master-header{border-left:3px solid #6eb8a9;}
+.master-block[data-color="rose"] .master-header{border-left:3px solid #e07070;}
+.master-block[data-color="amber"] .master-header{border-left:3px solid #c8a96e;}
+.master-block[data-color="sky"] .master-header{border-left:3px solid #6aaed6;}
+.master-block[data-color="violet"] .master-header{border-left:3px solid #a78bfa;}
+
+.master-count{font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:99px;flex-shrink:0;}
+.master-actions{display:flex;gap:6px;margin-left:8px;flex-shrink:0;}
+.master-body{display:none;padding:0 16px 16px;background:var(--surface);border-top:1px solid var(--border);}
 .master-block.open .master-body{display:block;}
 
 /* SUB CARD */
-.sub-card{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;background:var(--bg);transition:border-color 0.15s;}
-.sub-card:last-child{margin-bottom:0;}
+.sub-card{border:1px solid var(--border);border-radius:10px;margin-top:8px;overflow:hidden;background:var(--bg);transition:border-color 0.15s;}
 .sub-card:hover{border-color:#363645;}
 .sub-header{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;cursor:pointer;}
 .sub-chevron{color:var(--muted);font-size:10px;margin-top:4px;transition:transform 0.2s;flex-shrink:0;}
@@ -104,12 +122,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .sub-title-area{flex:1;min-width:0;}
 .sub-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .sub-meta{display:flex;gap:6px;flex-wrap:wrap;}
-.tag{font-size:11px;padding:2px 7px;border-radius:99px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);font-family:'DM Mono',monospace;}
+.tag{font-size:11px;padding:2px 7px;border-radius:99px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);font-family:'DM Mono',monospace;cursor:default;transition:all 0.15s;}
+.tag.clickable{cursor:pointer;}
+.tag.clickable:hover{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,0.08);}
+.tag.active-filter{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,0.12);}
 .tag.model{color:var(--accent2);border-color:rgba(124,106,255,0.25);background:rgba(124,106,255,0.07);}
 .tag.date{color:var(--green);border-color:rgba(110,184,169,0.25);background:rgba(110,184,169,0.07);}
 .sub-body{display:none;padding:0 16px 14px;}
 .sub-card.open .sub-body{display:block;}
-.prompt-text{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'DM Mono',monospace;font-size:12px;color:#c8ccd4;line-height:1.75;white-space:pre-wrap;word-break:break-word;position:relative;}
+.prompt-text{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 44px 12px 14px;font-family:'DM Mono',monospace;font-size:12px;color:#c8ccd4;line-height:1.75;white-space:pre-wrap;word-break:break-word;position:relative;}
 .copy-btn{position:absolute;top:8px;right:8px;padding:3px 9px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
 .copy-btn:hover{color:var(--text);border-color:var(--accent);}
 .copy-btn.copied{color:var(--green);border-color:var(--green);}
@@ -117,6 +138,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .sub-actions{display:flex;gap:6px;margin-top:10px;}
 .add-sub-btn{width:100%;margin-top:10px;padding:9px;border-radius:8px;border:1px dashed var(--border);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;text-align:center;}
 .add-sub-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(200,169,110,0.04);}
+
+/* ACTIVE TAG FILTER BANNER */
+#tag-filter-bar{display:none;align-items:center;gap:10px;padding:8px 14px;background:rgba(200,169,110,0.07);border:1px solid rgba(200,169,110,0.2);border-radius:8px;margin-bottom:16px;font-size:13px;color:var(--accent);}
+#tag-filter-bar.show{display:flex;}
+#tag-filter-bar button{margin-left:auto;font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid rgba(200,169,110,0.3);background:transparent;color:var(--accent);cursor:pointer;}
+#tag-filter-bar button:hover{background:rgba(200,169,110,0.1);}
 
 /* EMPTY */
 .empty-state{text-align:center;padding:48px 24px;color:var(--muted);}
@@ -130,16 +157,28 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .modal .subtitle{font-size:13px;color:var(--muted);margin-bottom:20px;}
 .form-group{margin-bottom:14px;}
 .form-group label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
-.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:border-color 0.2s;resize:vertical;}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:border-color 0.2s;resize:none;}
 .form-group input:focus,.form-group textarea:focus{border-color:var(--accent);}
 .form-group input.error,.form-group textarea.error{border-color:var(--red);}
-.form-group textarea{min-height:90px;}
 .form-group select option{background:var(--surface2);}
 .field-error{font-size:11px;color:var(--red);margin-top:4px;display:none;}
 .field-error.show{display:block;}
 .form-hint{font-size:11px;color:var(--muted);margin-top:5px;}
 .form-hint a{color:var(--accent);}
 .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;}
+
+/* COLOR PICKER */
+.color-picker{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.color-swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all 0.15s;position:relative;}
+.color-swatch:hover{transform:scale(1.15);}
+.color-swatch.selected{border-color:var(--text);box-shadow:0 0 0 2px var(--bg);}
+.color-swatch[data-c="none"]{background:var(--surface2);border-color:var(--border);}
+.color-swatch[data-c="indigo"]{background:#7c6aff;}
+.color-swatch[data-c="emerald"]{background:#6eb8a9;}
+.color-swatch[data-c="rose"]{background:#e07070;}
+.color-swatch[data-c="amber"]{background:#c8a96e;}
+.color-swatch[data-c="sky"]{background:#6aaed6;}
+.color-swatch[data-c="violet"]{background:#a78bfa;}
 
 /* SETUP SCREEN */
 #setup-screen{display:none;position:fixed;inset:0;background:var(--bg);z-index:500;align-items:center;justify-content:center;}
@@ -166,7 +205,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 </style>
 </head>
 <body>
-
 <div id="toast"></div>
 
 <!-- SETUP SCREEN -->
@@ -207,6 +245,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
       <div class="stat"><div class="num" id="s-subs">0</div><div class="lbl">Total Sub Prompt</div></div>
       <div class="stat"><div class="num" id="s-month">0</div><div class="lbl">Bulan Ini</div></div>
     </div>
+    <div id="tag-filter-bar">
+      <span>🏷 Filter tag: <b id="active-tag-label"></b></span>
+      <button onclick="clearTagFilter()">✕ Hapus filter</button>
+    </div>
     <div id="tab-bar"></div>
     <div id="content"></div>
   </main>
@@ -223,6 +265,18 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
     </div>
     <div class="form-group"><label>Icon (emoji)</label><input id="m-icon" type="text" placeholder="📁" maxlength="4"></div>
     <div class="form-group"><label>Deskripsi</label><input id="m-desc" type="text" placeholder="Singkat tentang kategori ini..." maxlength="120"></div>
+    <div class="form-group">
+      <label>Warna Aksen</label>
+      <div class="color-picker" id="color-picker">
+        <div class="color-swatch selected" data-c="none" onclick="selectColor('none')" title="Default"></div>
+        <div class="color-swatch" data-c="indigo" onclick="selectColor('indigo')" title="Indigo"></div>
+        <div class="color-swatch" data-c="emerald" onclick="selectColor('emerald')" title="Emerald"></div>
+        <div class="color-swatch" data-c="rose" onclick="selectColor('rose')" title="Rose"></div>
+        <div class="color-swatch" data-c="amber" onclick="selectColor('amber')" title="Amber"></div>
+        <div class="color-swatch" data-c="sky" onclick="selectColor('sky')" title="Sky"></div>
+        <div class="color-swatch" data-c="violet" onclick="selectColor('violet')" title="Violet"></div>
+      </div>
+    </div>
     <div class="modal-actions">
       <button class="btn" onclick="closeMasterModal()">Batal</button>
       <button class="btn primary" onclick="saveMaster()">Simpan</button>
@@ -242,12 +296,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
     </div>
     <div class="form-group">
       <label>Isi Prompt *</label>
-      <textarea id="s-prompt" placeholder="Tulis prompt kamu di sini..." maxlength="10000"></textarea>
+      <textarea id="s-prompt" placeholder="Tulis prompt kamu di sini..." maxlength="10000" rows="5"></textarea>
       <div class="field-error" id="s-prompt-err">Prompt wajib diisi (maks 10.000 karakter)</div>
     </div>
     <div class="form-group"><label>Model / Platform</label><input id="s-model" type="text" placeholder="Claude, GPT-4, Gemini..." maxlength="50"></div>
     <div class="form-group"><label>Tags (pisahkan koma)</label><input id="s-tags" type="text" placeholder="kreatif, formal, analisis" maxlength="200"></div>
-    <div class="form-group"><label>Catatan</label><textarea id="s-notes" placeholder="Tips atau konteks..." style="min-height:60px" maxlength="500"></textarea></div>
+    <div class="form-group"><label>Catatan</label><textarea id="s-notes" placeholder="Tips atau konteks..." rows="2" maxlength="500"></textarea></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeSubModal()">Batal</button>
       <button class="btn primary" onclick="saveSub()">Simpan</button>
@@ -258,8 +312,8 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 <!-- SETTINGS MODAL -->
 <div class="modal-overlay" id="settings-modal">
   <div class="modal">
-    <h3>Pengaturan Sync</h3>
-    <p class="subtitle">Data tersimpan di GitHub Gist milikmu.</p>
+    <h3>Pengaturan</h3>
+    <p class="subtitle">Kelola koneksi dan backup data kamu.</p>
     <div class="form-group">
       <label>GitHub Token</label>
       <input id="settings-token" type="password" placeholder="github_pat_...">
@@ -269,19 +323,28 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
       <label>Gist ID</label>
       <input id="settings-gist-id" type="text" readonly style="opacity:0.5;cursor:default">
     </div>
+    <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px;">
+      <div class="sb-label" style="padding:0 0 10px">Backup & Restore</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn" onclick="exportJSON()">⬇ Export JSON</button>
+        <button class="btn" onclick="document.getElementById('import-file').click()">⬆ Import JSON</button>
+        <input id="import-file" type="file" accept=".json" style="display:none" onchange="importJSON(event)">
+      </div>
+      <div class="form-hint" style="margin-top:8px">Export untuk backup manual. Import untuk restore atau pindah device.</div>
+    </div>
     <div class="modal-actions">
       <button class="btn danger" onclick="disconnectGist()">Disconnect</button>
       <button class="btn" onclick="closeSettings()">Tutup</button>
-      <button class="btn primary" onclick="saveSettings()">Simpan</button>
+      <button class="btn primary" onclick="saveSettings()">Simpan Token</button>
     </div>
   </div>
 </div>
 
 <script>
-// ── CONSTANTS ─────────────────────────────────────────────
-const LS_TOKEN = 'pl_gh_token';
-const LS_GIST  = 'pl_gist_id';
-const LS_DATA  = 'pl_data_v2';
+// ── CONSTANTS ────────────────────────────────────────────
+const LS_TOKEN  = 'pl_gh_token';
+const LS_GIST   = 'pl_gist_id';
+const LS_DATA   = 'pl_data_v2';
 const GIST_FILE = 'prompt-library.json';
 const MAX_RETRIES = 3;
 const RETRY_BASE_MS = 800;
@@ -289,85 +352,47 @@ const RETRY_BASE_MS = 800;
 // ── STATE ─────────────────────────────────────────────────
 const State = {
   activeTab: 'all',
+  activeTagFilter: null,
   editMasterId: null,
   editSubId: null,
   subTargetMasterId: null,
+  selectedColor: 'none',
   isSyncing: false,
-  lastSaveAt: 0,
   searchTimer: null,
 };
 
 // ── TOAST ─────────────────────────────────────────────────
 function toast(msg, type = 'info', duration = 3000) {
-  const container = document.getElementById('toast');
   const el = document.createElement('div');
   el.className = 'toast-item ' + type;
   el.textContent = msg;
-  container.appendChild(el);
-  requestAnimationFrame(() => { requestAnimationFrame(() => el.classList.add('show')); });
-  setTimeout(() => {
-    el.classList.remove('show');
-    setTimeout(() => el.remove(), 300);
-  }, duration);
+  document.getElementById('toast').appendChild(el);
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 300); }, duration);
 }
 
-// ── SANITIZE ──────────────────────────────────────────────
-// Strip all HTML tags and dangerous characters from user input
-function sanitize(str) {
-  if (typeof str !== 'string') return '';
-  return str
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\//g, '&#x2F;');
-}
+// ── GLASSMORPHISM SCROLL ──────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('topbar').classList.toggle('scrolled', window.scrollY > 10);
+});
 
-// For displaying in DOM safely — returns text node safe string
-function escH(s) {
-  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-// Clean and trim user input before saving
+// ── SANITIZE / CLEAN ──────────────────────────────────────
+function escH(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function cleanInput(str, maxLen = 1000) {
   if (typeof str !== 'string') return '';
   return str.trim().slice(0, maxLen);
 }
 
-// ── VALIDATION ────────────────────────────────────────────
-function validateMasterForm() {
-  const name = document.getElementById('m-name').value.trim();
-  let valid = true;
-  const nameErr = document.getElementById('m-name-err');
-  if (!name || name.length > 50) {
-    document.getElementById('m-name').classList.add('error');
-    nameErr.classList.add('show'); valid = false;
-  } else {
-    document.getElementById('m-name').classList.remove('error');
-    nameErr.classList.remove('show');
-  }
-  return valid;
+// ── AUTO-RESIZE TEXTAREA ──────────────────────────────────
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 400) + 'px';
 }
-
-function validateSubForm() {
-  let valid = true;
-  const checks = [
-    { id: 's-title', errId: 's-title-err', max: 100 },
-    { id: 's-prompt', errId: 's-prompt-err', max: 10000 },
-  ];
-  checks.forEach(({ id, errId, max }) => {
-    const val = document.getElementById(id).value.trim();
-    const errEl = document.getElementById(errId);
-    if (!val || val.length > max) {
-      document.getElementById(id).classList.add('error');
-      errEl.classList.add('show'); valid = false;
-    } else {
-      document.getElementById(id).classList.remove('error');
-      errEl.classList.remove('show');
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('textarea').forEach(ta => {
+    ta.addEventListener('input', () => autoResize(ta));
   });
-  return valid;
-}
+});
 
 // ── DEBOUNCE ──────────────────────────────────────────────
 function debounce(fn, ms) {
@@ -385,9 +410,8 @@ const RateLimit = {
   check() {
     const now = Date.now();
     this.calls = this.calls.filter(t => now - t < 60000);
-    if (this.calls.length >= this.MAX_PER_MINUTE) {
+    if (this.calls.length >= this.MAX_PER_MINUTE)
       throw new Error('Terlalu banyak request. Tunggu sebentar lalu coba lagi.');
-    }
     this.calls.push(now);
   }
 };
@@ -395,15 +419,13 @@ const RateLimit = {
 // ── RETRY WITH EXPONENTIAL BACKOFF ────────────────────────
 async function withRetry(fn, retries = MAX_RETRIES) {
   for (let attempt = 0; attempt <= retries; attempt++) {
-    try {
-      return await fn();
-    } catch (err) {
+    try { return await fn(); }
+    catch (err) {
       const isLast = attempt === retries;
-      const isNetworkErr = !err.message.includes('401') && !err.message.includes('404');
-      if (isLast || !isNetworkErr) throw err;
-      const delay = RETRY_BASE_MS * Math.pow(2, attempt);
-      setSyncStatus('loading', `Retry ${attempt + 1}/${retries}...`);
-      await new Promise(r => setTimeout(r, delay));
+      const isNetErr = !err.message.includes('401') && !err.message.includes('404');
+      if (isLast || !isNetErr) throw err;
+      setSyncStatus('loading', `Retry ${attempt+1}/${retries}...`);
+      await new Promise(r => setTimeout(r, RETRY_BASE_MS * Math.pow(2, attempt)));
     }
   }
 }
@@ -416,23 +438,18 @@ async function gistRequest(method, path, body) {
   RateLimit.check();
   const res = await fetch('https://api.github.com' + path, {
     method,
-    headers: {
-      'Authorization': 'token ' + getToken(),
-      'Content-Type': 'application/json',
-      'Accept': 'application/vnd.github.v3+json'
-    },
+    headers: { 'Authorization':'token '+getToken(), 'Content-Type':'application/json', 'Accept':'application/vnd.github.v3+json' },
     body: body ? JSON.stringify(body) : undefined
   });
   if (res.status === 401) throw new Error('401: Token tidak valid atau expired');
   if (res.status === 403) throw new Error('403: Akses ditolak. Cek scope token (harus ada "gist")');
   if (res.status === 404) throw new Error('404: Gist tidak ditemukan');
-  if (!res.ok) throw new Error('HTTP ' + res.status + ': Gagal terhubung ke GitHub');
+  if (!res.ok) throw new Error('HTTP ' + res.status);
   return res.json();
 }
 
 async function loadFromGist() {
-  const gistId = getGistId();
-  if (!gistId) return null;
+  const gistId = getGistId(); if (!gistId) return null;
   const data = await withRetry(() => gistRequest('GET', '/gists/' + gistId));
   const content = data.files[GIST_FILE]?.content;
   if (!content) return null;
@@ -445,41 +462,30 @@ async function saveToGist(data) {
   if (gistId) {
     await withRetry(() => gistRequest('PATCH', '/gists/' + gistId, body));
   } else {
-    body.description = 'Prompt Library Data';
-    body.public = false;
+    body.description = 'Prompt Library Data'; body.public = false;
     const res = await withRetry(() => gistRequest('POST', '/gists', body));
     localStorage.setItem(LS_GIST, res.id);
   }
 }
 
-// ── CONNECT FLOW ─────────────────────────────────────────
+// ── CONNECT ───────────────────────────────────────────────
 async function connectGist() {
   const token = document.getElementById('token-input').value.trim();
   const errEl = document.getElementById('setup-error');
   errEl.style.display = 'none';
-  if (!token || !token.startsWith('github_pat_') && !token.startsWith('ghp_')) {
-    errEl.textContent = 'Format token tidak valid. Pastikan copy token lengkap dari GitHub.';
-    errEl.style.display = 'block'; return;
+  if (!token || (!token.startsWith('github_pat_') && !token.startsWith('ghp_'))) {
+    errEl.textContent = 'Format token tidak valid.'; errEl.style.display = 'block'; return;
   }
   const btn = document.getElementById('connect-btn');
   btn.textContent = 'Menyambungkan...'; btn.disabled = true;
   try {
-    const res = await fetch('https://api.github.com/user', {
-      headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
-    });
+    const res = await fetch('https://api.github.com/user', { headers: { 'Authorization':'token '+token, 'Accept':'application/vnd.github.v3+json' } });
     if (!res.ok) throw new Error('Token tidak valid (status ' + res.status + ')');
     const user = await res.json();
     localStorage.setItem(LS_TOKEN, token);
     setSyncStatus('loading', 'Mencari data...');
-
-    // search for existing gist
-    const gists = await withRetry(() =>
-      fetch('https://api.github.com/gists', {
-        headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github.v3+json' }
-      }).then(r => r.json())
-    );
+    const gists = await fetch('https://api.github.com/gists', { headers: { 'Authorization':'token '+token, 'Accept':'application/vnd.github.v3+json' } }).then(r => r.json());
     const existing = Array.isArray(gists) ? gists.find(g => g.files && g.files[GIST_FILE]) : null;
-
     if (existing) {
       localStorage.setItem(LS_GIST, existing.id);
       const d = await loadFromGist();
@@ -492,17 +498,15 @@ async function connectGist() {
       toast('✓ Gist baru dibuat untuk ' + user.login, 'success');
     }
     document.getElementById('setup-screen').classList.remove('show');
-    setSyncStatus('ok', 'Tersinkron');
-    render();
+    setSyncStatus('ok', 'Tersinkron'); render();
   } catch(e) {
-    errEl.textContent = 'Gagal: ' + e.message;
-    errEl.style.display = 'block';
+    errEl.textContent = 'Gagal: ' + e.message; errEl.style.display = 'block';
     btn.textContent = 'Sambungkan'; btn.disabled = false;
     setSyncStatus('err', 'Gagal connect');
   }
 }
 
-// ── SYNC STATUS ──────────────────────────────────────────
+// ── SYNC STATUS ───────────────────────────────────────────
 function setSyncStatus(state, text) {
   document.getElementById('sync-dot').className = state;
   document.getElementById('sync-text').textContent = text;
@@ -511,21 +515,19 @@ function setSyncStatus(state, text) {
 async function forceSync() {
   if (State.isSyncing) return;
   State.isSyncing = true;
-  const btn = document.getElementById('sync-btn');
-  btn.disabled = true;
+  const btn = document.getElementById('sync-btn'); btn.disabled = true;
   setSyncStatus('loading', 'Menyinkron...');
   try {
     const d = await loadFromGist();
     if (d) { localStorage.setItem(LS_DATA, JSON.stringify(d)); render(); }
-    const t = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+    const t = new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
     setSyncStatus('ok', 'Tersinkron ' + t);
     toast('Data berhasil disinkron', 'success');
   } catch(e) {
     setSyncStatus('err', 'Gagal sync');
     toast('Gagal sync: ' + e.message, 'error', 5000);
   }
-  State.isSyncing = false;
-  btn.disabled = false;
+  State.isSyncing = false; btn.disabled = false;
 }
 
 // ── DATA ─────────────────────────────────────────────────
@@ -533,14 +535,12 @@ function load() {
   try { return JSON.parse(localStorage.getItem(LS_DATA)) || defaultData(); }
   catch { return defaultData(); }
 }
-
 async function persist(d) {
   localStorage.setItem(LS_DATA, JSON.stringify(d));
-  State.lastSaveAt = Date.now();
   setSyncStatus('loading', 'Menyimpan...');
   try {
     await saveToGist(d);
-    const t = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+    const t = new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
     setSyncStatus('ok', 'Tersimpan ' + t);
   } catch(e) {
     setSyncStatus('err', 'Gagal simpan');
@@ -551,9 +551,9 @@ async function persist(d) {
 function defaultData() {
   return {
     masters: [
-      { id:'m1', name:'Writing',  icon:'✍️', desc:'Prompt untuk menulis konten, email, artikel' },
-      { id:'m2', name:'Coding',   icon:'💻', desc:'Prompt untuk programming dan debugging' },
-      { id:'m3', name:'Business', icon:'💼', desc:'Prompt untuk analisis dan keperluan bisnis' },
+      { id:'m1', name:'Writing',  icon:'✍️', desc:'Prompt untuk menulis konten, email, artikel', color:'amber' },
+      { id:'m2', name:'Coding',   icon:'💻', desc:'Prompt untuk programming dan debugging', color:'indigo' },
+      { id:'m3', name:'Business', icon:'💼', desc:'Prompt untuk analisis dan keperluan bisnis', color:'emerald' },
     ],
     subs: [
       { id:'sub1', masterId:'m1', title:'Email Profesional', prompt:'Tulis email profesional dengan nada [formal/santai] kepada [NAMA] tentang:\n\n[TOPIK]\n\nPastikan:\n- Pembukaan sopan\n- Isi jelas dan padat\n- Permintaan spesifik\n- Penutup profesional', model:'Claude', tags:['email','formal'], notes:'Ganti bagian dalam kurung.', date:new Date().toISOString() },
@@ -564,6 +564,78 @@ function defaultData() {
   };
 }
 
+// ── EXPORT / IMPORT JSON ──────────────────────────────────
+function exportJSON() {
+  const d = load();
+  const blob = new Blob([JSON.stringify(d, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'prompt-library-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  toast('Backup berhasil diexport!', 'success');
+}
+
+function importJSON(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async ev => {
+    try {
+      const imp = JSON.parse(ev.target.result);
+      if (!imp.masters || !imp.subs) throw new Error('Format tidak valid');
+      const existing = load();
+      imp.masters.forEach(m => { if (!existing.masters.find(x => x.id===m.id)) existing.masters.push(m); });
+      imp.subs.forEach(s => { if (!existing.subs.find(x => x.id===s.id)) existing.subs.push(s); });
+      await persist(existing);
+      render();
+      toast(`✓ Import berhasil! ${imp.masters.length} master, ${imp.subs.length} sub prompt.`, 'success', 4000);
+    } catch(err) {
+      toast('Gagal import: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file); e.target.value = '';
+}
+
+// ── TAG FILTER ────────────────────────────────────────────
+function filterByTag(tag) {
+  State.activeTagFilter = tag;
+  document.getElementById('active-tag-label').textContent = tag;
+  document.getElementById('tag-filter-bar').classList.add('show');
+  document.getElementById('search-box').value = '';
+  render('');
+}
+function clearTagFilter() {
+  State.activeTagFilter = null;
+  document.getElementById('tag-filter-bar').classList.remove('show');
+  render('');
+}
+
+// ── COLOR PICKER ──────────────────────────────────────────
+function selectColor(c) {
+  State.selectedColor = c;
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.toggle('selected', s.dataset.c === c));
+}
+
+// ── VALIDATION ────────────────────────────────────────────
+function validateMasterForm() {
+  const name = document.getElementById('m-name').value.trim();
+  const errEl = document.getElementById('m-name-err');
+  const valid = name && name.length <= 50;
+  document.getElementById('m-name').classList.toggle('error', !valid);
+  errEl.classList.toggle('show', !valid);
+  return valid;
+}
+function validateSubForm() {
+  let valid = true;
+  [['s-title', 100], ['s-prompt', 10000]].forEach(([id, max]) => {
+    const val = document.getElementById(id).value.trim();
+    const ok = val && val.length <= max;
+    document.getElementById(id).classList.toggle('error', !ok);
+    document.getElementById(id + '-err').classList.toggle('show', !ok);
+    if (!ok) valid = false;
+  });
+  return valid;
+}
+
 // ── RENDER ───────────────────────────────────────────────
 function render(q) {
   q = q !== undefined ? q : (document.getElementById('search-box').value || '');
@@ -572,10 +644,7 @@ function render(q) {
   const now = new Date();
 
   // stats
-  const thisMonth = subs.filter(s => {
-    const d = new Date(s.date);
-    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-  });
+  const thisMonth = subs.filter(s => { const d=new Date(s.date); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
   document.getElementById('s-masters').textContent = masters.length;
   document.getElementById('s-subs').textContent = subs.length;
   document.getElementById('s-month').textContent = thisMonth.length;
@@ -583,74 +652,80 @@ function render(q) {
   // sidebar
   let sbHtml = `<div class="sb-item ${State.activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua<span class="sb-badge">${subs.length}</span></div>`;
   masters.forEach(m => {
-    const cnt = subs.filter(s => s.masterId === m.id).length;
-    const id = escH(m.id);
-    sbHtml += `<div class="sb-item ${State.activeTab===m.id?'active':''}" onclick="setTab('${id}')">${m.icon} ${escH(m.name)}<span class="sb-badge">${cnt}</span></div>`;
+    const cnt = subs.filter(s=>s.masterId===m.id).length;
+    sbHtml += `<div class="sb-item ${State.activeTab===m.id?'active':''}" onclick="setTab('${escH(m.id)}')">${m.icon} ${escH(m.name)}<span class="sb-badge">${cnt}</span></div>`;
   });
   document.getElementById('sb-list').innerHTML = sbHtml;
 
   // tabs
   let tabHtml = `<button class="tab ${State.activeTab==='all'?'active':''}" onclick="setTab('all')">🗂 Semua <span class="tc">${subs.length}</span></button>`;
   masters.forEach(m => {
-    const cnt = subs.filter(s => s.masterId === m.id && matchSub(s, ql)).length;
-    if (ql && cnt === 0) return;
-    const id = escH(m.id);
-    tabHtml += `<button class="tab ${State.activeTab===m.id?'active':''}" onclick="setTab('${id}')">${m.icon} ${escH(m.name)} <span class="tc">${ql ? cnt : subs.filter(s=>s.masterId===m.id).length}</span></button>`;
+    const cnt = subs.filter(s=>s.masterId===m.id&&matchSub(s,ql)).length;
+    if (ql && cnt===0) return;
+    tabHtml += `<button class="tab ${State.activeTab===m.id?'active':''}" onclick="setTab('${escH(m.id)}')">${m.icon} ${escH(m.name)} <span class="tc">${ql?cnt:subs.filter(s=>s.masterId===m.id).length}</span></button>`;
   });
   document.getElementById('tab-bar').innerHTML = tabHtml;
 
-  // content
-  const content = document.getElementById('content');
-  content.innerHTML = '';
-  const visMasters = State.activeTab === 'all' ? masters : masters.filter(m => m.id === State.activeTab);
+  // content — use DocumentFragment
+  const frag = document.createDocumentFragment();
+  const visMasters = State.activeTab==='all' ? masters : masters.filter(m=>m.id===State.activeTab);
   let any = false;
   visMasters.forEach(m => {
-    const mSubs = subs.filter(s => s.masterId === m.id && matchSub(s, ql));
-    if (ql && mSubs.length === 0) return;
+    const mSubs = subs.filter(s => s.masterId===m.id && matchSub(s, ql));
+    if (ql && mSubs.length===0) return;
     any = true;
-    content.appendChild(buildMasterBlock(m, ql ? mSubs : subs.filter(s => s.masterId === m.id)));
+    frag.appendChild(buildMasterBlock(m, ql ? mSubs : subs.filter(s=>s.masterId===m.id)));
   });
-  if (!any) content.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>Tidak ada prompt yang cocok.</p></div>`;
+  const content = document.getElementById('content');
+  content.innerHTML = '';
+  if (any) content.appendChild(frag);
+  else content.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>Tidak ada prompt yang cocok.</p></div>`;
 
-  // update master select
-  const sel = document.getElementById('s-master');
-  sel.innerHTML = masters.map(m => `<option value="${escH(m.id)}">${m.icon} ${escH(m.name)}</option>`).join('');
+  // master select
+  document.getElementById('s-master').innerHTML = masters.map(m=>`<option value="${escH(m.id)}">${m.icon} ${escH(m.name)}</option>`).join('');
 }
 
 function buildMasterBlock(m, mSubs) {
   const block = document.createElement('div');
-  block.className = 'master-block open';
+  // DEFAULT: collapsed (no 'open' class)
+  block.className = 'master-block';
   block.id = 'mb-' + m.id;
-  const titleEl = document.createElement('div');
-  titleEl.className = 'master-header';
-  titleEl.innerHTML = `
+  if (m.color && m.color !== 'none') block.dataset.color = m.color;
+
+  const header = document.createElement('div');
+  header.className = 'master-header';
+  header.innerHTML = `
     <span class="master-chevron">▶</span>
     <span class="master-icon">${m.icon}</span>
-    <div style="flex:1">
+    <div style="flex:1;min-width:0">
       <div class="master-title">${escH(m.name)}</div>
       ${m.desc ? `<div class="master-desc">${escH(m.desc)}</div>` : ''}
     </div>
     <span class="master-count">${mSubs.length} prompt</span>
     <div class="master-actions">
-      <button class="btn sm" data-edit-master="${escH(m.id)}">✏️</button>
-      <button class="btn sm danger" data-del-master="${escH(m.id)}">🗑</button>
+      <button class="btn sm" title="Edit">✏️</button>
+      <button class="btn sm danger" title="Hapus">🗑</button>
     </div>
   `;
-  titleEl.querySelector('[data-edit-master]').onclick = e => { e.stopPropagation(); openEditMaster(m.id); };
-  titleEl.querySelector('[data-del-master]').onclick = e => { e.stopPropagation(); deleteMaster(m.id); };
-  titleEl.addEventListener('click', () => toggleMaster(m.id));
-  block.appendChild(titleEl);
+  header.querySelector('.master-actions').querySelectorAll('button')[0].onclick = e => { e.stopPropagation(); openEditMaster(m.id); };
+  header.querySelector('.master-actions').querySelectorAll('button')[1].onclick = e => { e.stopPropagation(); deleteMaster(m.id); };
+  header.addEventListener('click', () => block.classList.toggle('open'));
+  block.appendChild(header);
 
   const body = document.createElement('div');
   body.className = 'master-body';
   body.id = 'mb-body-' + m.id;
+
   if (!mSubs.length) {
     const empty = document.createElement('div');
-    empty.style.cssText = 'padding:10px 4px;color:var(--muted);font-size:13px;font-style:italic';
+    empty.style.cssText = 'padding:12px 4px 4px;color:var(--muted);font-size:13px;font-style:italic';
     empty.textContent = 'Belum ada sub prompt.';
     body.appendChild(empty);
   } else {
-    mSubs.forEach(s => body.appendChild(buildSubCard(s)));
+    // use DocumentFragment for sub cards too
+    const subFrag = document.createDocumentFragment();
+    mSubs.forEach(s => subFrag.appendChild(buildSubCard(s)));
+    body.appendChild(subFrag);
   }
   const addBtn = document.createElement('button');
   addBtn.className = 'add-sub-btn';
@@ -665,12 +740,13 @@ function buildSubCard(s) {
   const card = document.createElement('div');
   card.className = 'sub-card';
   card.id = 'sc-' + s.id;
-  const tags = (s.tags || []).map(t => `<span class="tag">${escH(t)}</span>`).join('');
+  const tags = (s.tags||[]).map(t =>
+    `<span class="tag clickable${State.activeTagFilter===t?' active-filter':''}" data-tag="${escH(t)}">${escH(t)}</span>`
+  ).join('');
   const modelTag = s.model ? `<span class="tag model">${escH(s.model)}</span>` : '';
-  const dateStr = s.date ? new Date(s.date).toLocaleDateString('id-ID', {day:'numeric',month:'short',year:'numeric'}) : '';
+  const dateStr = s.date ? new Date(s.date).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'}) : '';
   const dateTag = dateStr ? `<span class="tag date">${dateStr}</span>` : '';
 
-  // Build using DOM to avoid XSS in prompt text
   card.innerHTML = `
     <div class="sub-header">
       <span class="sub-chevron">▶</span>
@@ -688,32 +764,30 @@ function buildSubCard(s) {
       </div>
     </div>
   `;
-
-  // Set prompt text safely as textContent (not innerHTML)
+  // Safe text insertion
   const promptBox = card.querySelector('.prompt-text');
-  const textNode = document.createTextNode(s.prompt || '');
-  promptBox.insertBefore(textNode, promptBox.querySelector('.copy-btn'));
+  promptBox.insertBefore(document.createTextNode(s.prompt || ''), promptBox.querySelector('.copy-btn'));
 
-  card.querySelector('.sub-header').onclick = () => toggleSub(s.id);
-  card.querySelector('.copy-btn').onclick = e => doCopy(e, s.id, s.prompt);
+  // Clickable tags
+  card.querySelectorAll('.tag.clickable').forEach(tagEl => {
+    tagEl.onclick = e => { e.stopPropagation(); filterByTag(tagEl.dataset.tag); };
+  });
+  card.querySelector('.sub-header').onclick = () => card.classList.toggle('open');
+  card.querySelector('.copy-btn').onclick = e => { e.stopPropagation(); doCopy(e, s.prompt); };
   card.querySelectorAll('.sub-actions .btn')[0].onclick = () => openEditSub(s.id);
   card.querySelectorAll('.sub-actions .btn')[1].onclick = () => deleteSub(s.id);
   return card;
 }
 
 // ── INTERACTIONS ─────────────────────────────────────────
-function toggleMaster(id) { document.getElementById('mb-' + id)?.classList.toggle('open'); }
-function toggleSub(id) { document.getElementById('sc-' + id)?.classList.toggle('open'); }
 function setTab(id) { State.activeTab = id; render(); }
-
-function doCopy(e, id, rawText) {
+function doCopy(e, rawText) {
   e.stopPropagation();
   navigator.clipboard.writeText(rawText).then(() => {
-    const b = e.target;
-    b.textContent = '✓ Disalin'; b.classList.add('copied');
-    setTimeout(() => { b.textContent = 'Salin'; b.classList.remove('copied'); }, 2000);
-    toast('Prompt disalin!', 'success', 1500);
-  }).catch(() => toast('Gagal menyalin', 'error'));
+    const b = e.target; b.textContent='✓ Disalin'; b.classList.add('copied');
+    setTimeout(()=>{ b.textContent='Salin'; b.classList.remove('copied'); },2000);
+    toast('Prompt disalin!','success',1500);
+  }).catch(()=>toast('Gagal menyalin','error'));
 }
 
 // ── MASTER MODAL ─────────────────────────────────────────
@@ -721,20 +795,22 @@ function openMasterModal() {
   State.editMasterId = null;
   document.getElementById('master-modal-title').textContent = 'Tambah Master Prompt';
   ['m-name','m-icon','m-desc'].forEach(id => document.getElementById(id).value = '');
-  ['m-name'].forEach(id => { document.getElementById(id).classList.remove('error'); document.getElementById(id + '-err').classList.remove('show'); });
+  document.getElementById('m-name').classList.remove('error');
+  document.getElementById('m-name-err').classList.remove('show');
+  selectColor('none');
   document.getElementById('master-modal').classList.add('open');
 }
 function openEditMaster(id) {
-  const m = load().masters.find(x => x.id === id); if (!m) return;
+  const m = load().masters.find(x=>x.id===id); if (!m) return;
   State.editMasterId = id;
   document.getElementById('master-modal-title').textContent = 'Edit Master Prompt';
   document.getElementById('m-name').value = m.name;
   document.getElementById('m-icon').value = m.icon;
   document.getElementById('m-desc').value = m.desc || '';
+  selectColor(m.color || 'none');
   document.getElementById('master-modal').classList.add('open');
 }
-function closeMasterModal() { document.getElementById('master-modal').classList.remove('open'); State.editMasterId = null; }
-
+function closeMasterModal() { document.getElementById('master-modal').classList.remove('open'); State.editMasterId=null; }
 async function saveMaster() {
   if (!validateMasterForm()) return;
   const d = load();
@@ -742,99 +818,97 @@ async function saveMaster() {
     name: cleanInput(document.getElementById('m-name').value, 50),
     icon: cleanInput(document.getElementById('m-icon').value, 4) || '📁',
     desc: cleanInput(document.getElementById('m-desc').value, 120),
+    color: State.selectedColor,
   };
   if (State.editMasterId) {
-    const idx = d.masters.findIndex(x => x.id === State.editMasterId);
-    if (idx !== -1) d.masters[idx] = { ...d.masters[idx], ...entry };
-    toast('Master prompt diperbarui', 'success');
+    const idx = d.masters.findIndex(x=>x.id===State.editMasterId);
+    if (idx!==-1) d.masters[idx] = {...d.masters[idx],...entry};
+    toast('Master prompt diperbarui','success');
   } else {
-    d.masters.push({ id: 'm' + Date.now(), ...entry });
-    toast('Master prompt ditambahkan', 'success');
+    d.masters.push({id:'m'+Date.now(),...entry});
+    toast('Master prompt ditambahkan','success');
   }
   closeMasterModal(); await persist(d); render();
 }
-
 async function deleteMaster(id) {
-  const m = load().masters.find(x => x.id === id);
+  const m = load().masters.find(x=>x.id===id);
   if (!confirm(`Hapus master "${m?.name}" beserta semua sub prompt di dalamnya?`)) return;
   const d = load();
-  d.masters = d.masters.filter(x => x.id !== id);
-  d.subs = d.subs.filter(x => x.masterId !== id);
-  if (State.activeTab === id) State.activeTab = 'all';
-  toast('Master prompt dihapus', 'info');
+  d.masters = d.masters.filter(x=>x.id!==id);
+  d.subs = d.subs.filter(x=>x.masterId!==id);
+  if (State.activeTab===id) State.activeTab='all';
+  toast('Master prompt dihapus','info');
   await persist(d); render();
 }
 
 // ── SUB MODAL ────────────────────────────────────────────
 function openSubModal(masterId) {
-  State.editSubId = null; State.subTargetMasterId = masterId || null;
+  State.editSubId = null; State.subTargetMasterId = masterId||null;
   document.getElementById('sub-modal-title').textContent = 'Tambah Sub Prompt';
-  ['s-title','s-prompt','s-model','s-tags','s-notes'].forEach(id => document.getElementById(id).value = '');
-  ['s-title','s-prompt'].forEach(id => { document.getElementById(id).classList.remove('error'); document.getElementById(id + '-err').classList.remove('show'); });
+  ['s-title','s-prompt','s-model','s-tags','s-notes'].forEach(id => document.getElementById(id).value='');
+  ['s-title','s-prompt'].forEach(id => { document.getElementById(id).classList.remove('error'); document.getElementById(id+'-err').classList.remove('show'); });
   if (masterId) document.getElementById('s-master').value = masterId;
+  // reset textarea heights
+  ['s-prompt','s-notes'].forEach(id => { const el=document.getElementById(id); el.style.height='auto'; });
   document.getElementById('sub-modal').classList.add('open');
 }
 function openEditSub(id) {
-  const s = load().subs.find(x => x.id === id); if (!s) return;
+  const s = load().subs.find(x=>x.id===id); if (!s) return;
   State.editSubId = id;
   document.getElementById('sub-modal-title').textContent = 'Edit Sub Prompt';
   document.getElementById('s-master').value = s.masterId;
   document.getElementById('s-title').value = s.title;
   document.getElementById('s-prompt').value = s.prompt;
-  document.getElementById('s-model').value = s.model || '';
-  document.getElementById('s-tags').value = (s.tags || []).join(', ');
-  document.getElementById('s-notes').value = s.notes || '';
+  document.getElementById('s-model').value = s.model||'';
+  document.getElementById('s-tags').value = (s.tags||[]).join(', ');
+  document.getElementById('s-notes').value = s.notes||'';
+  // auto-resize after setting value
+  setTimeout(()=>{ ['s-prompt','s-notes'].forEach(id => autoResize(document.getElementById(id))); }, 50);
   document.getElementById('sub-modal').classList.add('open');
 }
-function closeSubModal() { document.getElementById('sub-modal').classList.remove('open'); State.editSubId = null; }
-
+function closeSubModal() { document.getElementById('sub-modal').classList.remove('open'); State.editSubId=null; }
 async function saveSub() {
   if (!validateSubForm()) return;
   const d = load();
-  const tags = document.getElementById('s-tags').value
-    .split(',').map(t => cleanInput(t, 30)).filter(Boolean).slice(0, 10);
+  const tags = document.getElementById('s-tags').value.split(',').map(t=>cleanInput(t,30)).filter(Boolean).slice(0,10);
   const entry = {
     masterId: document.getElementById('s-master').value,
     title:  cleanInput(document.getElementById('s-title').value, 100),
     prompt: cleanInput(document.getElementById('s-prompt').value, 10000),
     model:  cleanInput(document.getElementById('s-model').value, 50),
-    tags,
-    notes:  cleanInput(document.getElementById('s-notes').value, 500),
+    tags, notes: cleanInput(document.getElementById('s-notes').value, 500),
   };
   if (State.editSubId) {
-    const idx = d.subs.findIndex(x => x.id === State.editSubId);
-    if (idx !== -1) d.subs[idx] = { ...d.subs[idx], ...entry };
-    toast('Sub prompt diperbarui', 'success');
+    const idx = d.subs.findIndex(x=>x.id===State.editSubId);
+    if (idx!==-1) d.subs[idx] = {...d.subs[idx],...entry};
+    toast('Sub prompt diperbarui','success');
   } else {
-    d.subs.push({ id: 's' + Date.now(), ...entry, date: new Date().toISOString() });
-    toast('Sub prompt ditambahkan', 'success');
+    d.subs.push({id:'s'+Date.now(),...entry,date:new Date().toISOString()});
+    toast('Sub prompt ditambahkan','success');
   }
   closeSubModal(); await persist(d); render();
 }
-
 async function deleteSub(id) {
-  const s = load().subs.find(x => x.id === id);
+  const s = load().subs.find(x=>x.id===id);
   if (!confirm(`Hapus sub prompt "${s?.title}"?`)) return;
-  const d = load(); d.subs = d.subs.filter(x => x.id !== id);
-  toast('Sub prompt dihapus', 'info');
+  const d = load(); d.subs = d.subs.filter(x=>x.id!==id);
+  toast('Sub prompt dihapus','info');
   await persist(d); render();
 }
 
 // ── SETTINGS ─────────────────────────────────────────────
 function showSettings() {
-  document.getElementById('settings-token').value = getToken() || '';
-  document.getElementById('settings-gist-id').value = getGistId() || 'Belum terhubung';
+  document.getElementById('settings-token').value = getToken()||'';
+  document.getElementById('settings-gist-id').value = getGistId()||'Belum terhubung';
   document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettings() { document.getElementById('settings-modal').classList.remove('open'); }
 async function saveSettings() {
   const token = document.getElementById('settings-token').value.trim();
-  if (token && (token.startsWith('github_pat_') || token.startsWith('ghp_'))) {
+  if (token && (token.startsWith('github_pat_')||token.startsWith('ghp_'))) {
     localStorage.setItem(LS_TOKEN, token);
     closeSettings(); await forceSync();
-  } else {
-    toast('Format token tidak valid', 'error'); 
-  }
+  } else { toast('Format token tidak valid','error'); }
 }
 function disconnectGist() {
   if (!confirm('Disconnect dan hapus token dari browser ini?')) return;
@@ -845,15 +919,13 @@ function disconnectGist() {
 
 // ── HELPERS ──────────────────────────────────────────────
 function matchSub(s, q) {
+  if (State.activeTagFilter) return (s.tags||[]).includes(State.activeTagFilter);
   if (!q) return true;
-  return (s.title + s.prompt + (s.tags||[]).join(' ') + (s.notes||'')).toLowerCase().includes(q);
+  return (s.title+s.prompt+(s.tags||[]).join(' ')+(s.notes||'')).toLowerCase().includes(q);
 }
 
-// Close modals on overlay click
 ['master-modal','sub-modal','settings-modal'].forEach(id => {
-  document.getElementById(id).addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('open');
-  });
+  document.getElementById(id).addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
 });
 
 // ── INIT ─────────────────────────────────────────────────
@@ -862,15 +934,15 @@ function matchSub(s, q) {
     document.getElementById('setup-screen').classList.add('show');
     return;
   }
-  setSyncStatus('loading', 'Memuat data...');
+  setSyncStatus('loading','Memuat data...');
   try {
     const d = await loadFromGist();
     if (d) localStorage.setItem(LS_DATA, JSON.stringify(d));
-    const t = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
-    setSyncStatus('ok', 'Tersinkron ' + t);
+    const t = new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+    setSyncStatus('ok','Tersinkron ' + t);
   } catch(e) {
-    setSyncStatus('err', 'Offline — data lokal');
-    toast('Tidak dapat terhubung ke Gist. Menggunakan data lokal.', 'error', 5000);
+    setSyncStatus('err','Offline — data lokal');
+    toast('Tidak dapat terhubung ke Gist. Menggunakan data lokal.','error',5000);
   }
   render();
 })();
